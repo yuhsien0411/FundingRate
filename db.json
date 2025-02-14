@@ -1,0 +1,2459 @@
+{
+  "settlements": {
+    "Bybit-10000000AIDOGE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.173Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000000MOG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.174Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000000CHEEMS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.174Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000000PEIPEI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.174Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000ELON": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.175Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000COQ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.174Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000LADYS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.175Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000QUBIC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.175Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000SATS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.175Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000WEN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.175Z",
+      "abnormalSince": null
+    },
+    "Bybit-10000WHY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.176Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000APU": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.176Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000BONK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.177Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000BTT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.177Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000CATS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.177Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000CAT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.178Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000FLOKI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.178Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000LUNC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.178Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000MUMU": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.178Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000NEIROCTO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.178Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000PEPE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.178Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000RATS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.179Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000TOSHI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.179Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000TURBO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.179Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000XEC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.179Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000X": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.179Z",
+      "abnormalSince": null
+    },
+    "Bybit-1INCH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.180Z",
+      "abnormalSince": null
+    },
+    "Bybit-A8": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.180Z",
+      "abnormalSince": null
+    },
+    "Bybit-AAVE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.180Z",
+      "abnormalSince": null
+    },
+    "Bybit-ACE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.180Z",
+      "abnormalSince": null
+    },
+    "Bybit-ACH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.184Z",
+      "abnormalSince": null
+    },
+    "Bybit-ACT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.185Z",
+      "abnormalSince": null
+    },
+    "Bybit-ACX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.185Z",
+      "abnormalSince": null
+    },
+    "Bybit-ADA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.185Z",
+      "abnormalSince": null
+    },
+    "Bybit-AERGO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.186Z",
+      "abnormalSince": null
+    },
+    "Bybit-AERO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.186Z",
+      "abnormalSince": null
+    },
+    "Bybit-AEVO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.186Z",
+      "abnormalSince": null
+    },
+    "Bybit-AGI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.186Z",
+      "abnormalSince": null
+    },
+    "Bybit-AGLD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.186Z",
+      "abnormalSince": null
+    },
+    "Bybit-AIOZ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.187Z",
+      "abnormalSince": null
+    },
+    "Bybit-AI16Z": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.186Z",
+      "abnormalSince": null
+    },
+    "Bybit-AI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.187Z",
+      "abnormalSince": null
+    },
+    "Bybit-AIXBT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.187Z",
+      "abnormalSince": null
+    },
+    "Bybit-AKT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.188Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALCH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.188Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALEO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.188Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALGO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.188Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALICE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.188Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALPACA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.189Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALPHA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.189Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.189Z",
+      "abnormalSince": null
+    },
+    "Bybit-ALU": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.189Z",
+      "abnormalSince": null
+    },
+    "Bybit-AMB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.189Z",
+      "abnormalSince": null
+    },
+    "Bybit-ANIME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.190Z",
+      "abnormalSince": null
+    },
+    "Bybit-ANKR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.190Z",
+      "abnormalSince": null
+    },
+    "Bybit-APE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.190Z",
+      "abnormalSince": null
+    },
+    "Bybit-API3": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.190Z",
+      "abnormalSince": null
+    },
+    "Bybit-APT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.190Z",
+      "abnormalSince": null
+    },
+    "Bybit-ARB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.191Z",
+      "abnormalSince": null
+    },
+    "Bybit-ARC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.191Z",
+      "abnormalSince": null
+    },
+    "Bybit-ARKM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.191Z",
+      "abnormalSince": null
+    },
+    "Bybit-ARK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.191Z",
+      "abnormalSince": null
+    },
+    "Bybit-ARPA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.192Z",
+      "abnormalSince": null
+    },
+    "Bybit-AR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.192Z",
+      "abnormalSince": null
+    },
+    "Bybit-ASTR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.192Z",
+      "abnormalSince": null
+    },
+    "Bybit-ATA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.192Z",
+      "abnormalSince": null
+    },
+    "Bybit-ATH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.192Z",
+      "abnormalSince": null
+    },
+    "Bybit-ATOM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.192Z",
+      "abnormalSince": null
+    },
+    "Bybit-AUCTION": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.193Z",
+      "abnormalSince": null
+    },
+    "Bybit-AUDIO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.193Z",
+      "abnormalSince": null
+    },
+    "Bybit-AVAAI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.193Z",
+      "abnormalSince": null
+    },
+    "Bybit-AVAIL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.193Z",
+      "abnormalSince": null
+    },
+    "Bybit-AVA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.193Z",
+      "abnormalSince": null
+    },
+    "Bybit-AVAX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.194Z",
+      "abnormalSince": null
+    },
+    "Bybit-AXL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.194Z",
+      "abnormalSince": null
+    },
+    "Bybit-AXS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.194Z",
+      "abnormalSince": null
+    },
+    "Bybit-BADGER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.194Z",
+      "abnormalSince": null
+    },
+    "Bybit-BAKE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.195Z",
+      "abnormalSince": null
+    },
+    "Bybit-BAL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.195Z",
+      "abnormalSince": null
+    },
+    "Bybit-BANANA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.195Z",
+      "abnormalSince": null
+    },
+    "Bybit-BAND": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.195Z",
+      "abnormalSince": null
+    },
+    "Bybit-BAN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.195Z",
+      "abnormalSince": null
+    },
+    "Bybit-BAT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.195Z",
+      "abnormalSince": null
+    },
+    "Bybit-BB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.196Z",
+      "abnormalSince": null
+    },
+    "Bybit-BCH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.196Z",
+      "abnormalSince": null
+    },
+    "Bybit-BEAM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.196Z",
+      "abnormalSince": null
+    },
+    "Bybit-BEL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.196Z",
+      "abnormalSince": null
+    },
+    "Bybit-BERA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.197Z",
+      "abnormalSince": null
+    },
+    "Bybit-BICO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.197Z",
+      "abnormalSince": null
+    },
+    "Bybit-BIGTIME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.197Z",
+      "abnormalSince": null
+    },
+    "Bybit-BILLY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.197Z",
+      "abnormalSince": null
+    },
+    "Bybit-BIO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.197Z",
+      "abnormalSince": null
+    },
+    "Bybit-BLAST": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.197Z",
+      "abnormalSince": null
+    },
+    "Bybit-BLUE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.198Z",
+      "abnormalSince": null
+    },
+    "Bybit-BLUR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.198Z",
+      "abnormalSince": null
+    },
+    "Bybit-BNB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.198Z",
+      "abnormalSince": null
+    },
+    "Bybit-BNT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.198Z",
+      "abnormalSince": null
+    },
+    "Bybit-BOBA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.199Z",
+      "abnormalSince": null
+    },
+    "Bybit-BNX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.199Z",
+      "abnormalSince": null
+    },
+    "Bybit-BOME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.199Z",
+      "abnormalSince": null
+    },
+    "Bybit-BRETT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.199Z",
+      "abnormalSince": null
+    },
+    "Bybit-BSV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.199Z",
+      "abnormalSince": null
+    },
+    "Bybit-BSW": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.199Z",
+      "abnormalSince": null
+    },
+    "Bybit-BTC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.200Z",
+      "abnormalSince": null
+    },
+    "Bybit-BUZZ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.200Z",
+      "abnormalSince": null
+    },
+    "Bybit-C98": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.200Z",
+      "abnormalSince": null
+    },
+    "Bybit-CAKE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.200Z",
+      "abnormalSince": null
+    },
+    "Bybit-CARV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.201Z",
+      "abnormalSince": null
+    },
+    "Bybit-CATI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.201Z",
+      "abnormalSince": null
+    },
+    "Bybit-CELO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.201Z",
+      "abnormalSince": null
+    },
+    "Bybit-CELR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.201Z",
+      "abnormalSince": null
+    },
+    "Bybit-CETUS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.201Z",
+      "abnormalSince": null
+    },
+    "Bybit-CFX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.202Z",
+      "abnormalSince": null
+    },
+    "Bybit-CGPT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.202Z",
+      "abnormalSince": null
+    },
+    "Bybit-CHESS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.202Z",
+      "abnormalSince": null
+    },
+    "Bybit-CHILLGUY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.202Z",
+      "abnormalSince": null
+    },
+    "Bybit-CHR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.202Z",
+      "abnormalSince": null
+    },
+    "Bybit-CHZ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.203Z",
+      "abnormalSince": null
+    },
+    "Bybit-CKB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.203Z",
+      "abnormalSince": null
+    },
+    "Bybit-CLOUD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.203Z",
+      "abnormalSince": null
+    },
+    "Bybit-COMBO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.203Z",
+      "abnormalSince": null
+    },
+    "Bybit-COMP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.203Z",
+      "abnormalSince": null
+    },
+    "Bybit-COOKIE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.204Z",
+      "abnormalSince": null
+    },
+    "Bybit-COOK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.204Z",
+      "abnormalSince": null
+    },
+    "Bybit-CORE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.204Z",
+      "abnormalSince": null
+    },
+    "Bybit-COS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.204Z",
+      "abnormalSince": null
+    },
+    "Bybit-COTI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.204Z",
+      "abnormalSince": null
+    },
+    "Bybit-COW": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.205Z",
+      "abnormalSince": null
+    },
+    "Bybit-CRO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.205Z",
+      "abnormalSince": null
+    },
+    "Bybit-CRV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.205Z",
+      "abnormalSince": null
+    },
+    "Bybit-CTC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.205Z",
+      "abnormalSince": null
+    },
+    "Bybit-CTK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.206Z",
+      "abnormalSince": null
+    },
+    "Bybit-CTSI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.206Z",
+      "abnormalSince": null
+    },
+    "Bybit-CVC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.206Z",
+      "abnormalSince": null
+    },
+    "Bybit-CVX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.206Z",
+      "abnormalSince": null
+    },
+    "Bybit-CYBER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.206Z",
+      "abnormalSince": null
+    },
+    "Bybit-DASH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.207Z",
+      "abnormalSince": null
+    },
+    "Bybit-DATA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.207Z",
+      "abnormalSince": null
+    },
+    "Bybit-DBR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.207Z",
+      "abnormalSince": null
+    },
+    "Bybit-DEEP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.207Z",
+      "abnormalSince": null
+    },
+    "Bybit-DEGEN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.207Z",
+      "abnormalSince": null
+    },
+    "Bybit-DENT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.208Z",
+      "abnormalSince": null
+    },
+    "Bybit-DEXE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.208Z",
+      "abnormalSince": null
+    },
+    "Bybit-DGB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.208Z",
+      "abnormalSince": null
+    },
+    "Bybit-DODO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.208Z",
+      "abnormalSince": null
+    },
+    "Bybit-DOGE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.208Z",
+      "abnormalSince": null
+    },
+    "Bybit-DOGS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.209Z",
+      "abnormalSince": null
+    },
+    "Bybit-DOG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.209Z",
+      "abnormalSince": null
+    },
+    "Bybit-DOT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.209Z",
+      "abnormalSince": null
+    },
+    "Bybit-DRIFT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.209Z",
+      "abnormalSince": null
+    },
+    "Bybit-DUCK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.210Z",
+      "abnormalSince": null
+    },
+    "Bybit-DUSK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.210Z",
+      "abnormalSince": null
+    },
+    "Bybit-DYDX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.210Z",
+      "abnormalSince": null
+    },
+    "Bybit-DYM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.210Z",
+      "abnormalSince": null
+    },
+    "Bybit-EDU": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.210Z",
+      "abnormalSince": null
+    },
+    "Bybit-EGLD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.211Z",
+      "abnormalSince": null
+    },
+    "Bybit-EIGEN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.211Z",
+      "abnormalSince": null
+    },
+    "Bybit-ENA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.211Z",
+      "abnormalSince": null
+    },
+    "Bybit-ENJ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.211Z",
+      "abnormalSince": null
+    },
+    "Bybit-ENS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.211Z",
+      "abnormalSince": null
+    },
+    "Bybit-EOS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.212Z",
+      "abnormalSince": null
+    },
+    "Bybit-ETC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.212Z",
+      "abnormalSince": null
+    },
+    "Bybit-ETHBTC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.212Z",
+      "abnormalSince": null
+    },
+    "Bybit-ETHFI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.212Z",
+      "abnormalSince": null
+    },
+    "Bybit-ETH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.213Z",
+      "abnormalSince": null
+    },
+    "Bybit-ETHW": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.213Z",
+      "abnormalSince": null
+    },
+    "Bybit-FARTCOIN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.213Z",
+      "abnormalSince": null
+    },
+    "Bybit-FB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.213Z",
+      "abnormalSince": null
+    },
+    "Bybit-FDUSD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.213Z",
+      "abnormalSince": null
+    },
+    "Bybit-FIDA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.214Z",
+      "abnormalSince": null
+    },
+    "Bybit-FIL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.214Z",
+      "abnormalSince": null
+    },
+    "Bybit-FIO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.214Z",
+      "abnormalSince": null
+    },
+    "Bybit-FIRE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.214Z",
+      "abnormalSince": null
+    },
+    "Bybit-FLM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.215Z",
+      "abnormalSince": null
+    },
+    "Bybit-FLOCK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.215Z",
+      "abnormalSince": null
+    },
+    "Bybit-FLOW": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.215Z",
+      "abnormalSince": null
+    },
+    "Bybit-FLR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.215Z",
+      "abnormalSince": null
+    },
+    "Bybit-FLUX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.215Z",
+      "abnormalSince": null
+    },
+    "Bybit-FORTH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.215Z",
+      "abnormalSince": null
+    },
+    "Bybit-FOXY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.216Z",
+      "abnormalSince": null
+    },
+    "Bybit-FTN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.216Z",
+      "abnormalSince": null
+    },
+    "Bybit-FUEL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.216Z",
+      "abnormalSince": null
+    },
+    "Bybit-F": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.216Z",
+      "abnormalSince": null
+    },
+    "Bybit-FWOG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.216Z",
+      "abnormalSince": null
+    },
+    "Bybit-FXS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.217Z",
+      "abnormalSince": null
+    },
+    "Bybit-GALA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.217Z",
+      "abnormalSince": null
+    },
+    "Bybit-GAS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.217Z",
+      "abnormalSince": null
+    },
+    "Bybit-GEMS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.217Z",
+      "abnormalSince": null
+    },
+    "Bybit-GIGA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.217Z",
+      "abnormalSince": null
+    },
+    "Bybit-GLMR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.218Z",
+      "abnormalSince": null
+    },
+    "Bybit-GLM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.218Z",
+      "abnormalSince": null
+    },
+    "Bybit-GME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.218Z",
+      "abnormalSince": null
+    },
+    "Bybit-GMT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.218Z",
+      "abnormalSince": null
+    },
+    "Bybit-GMX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.218Z",
+      "abnormalSince": null
+    },
+    "Bybit-GNO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.218Z",
+      "abnormalSince": null
+    },
+    "Bybit-GOAT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.219Z",
+      "abnormalSince": null
+    },
+    "Bybit-GODS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.219Z",
+      "abnormalSince": null
+    },
+    "Bybit-GOMINING": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.219Z",
+      "abnormalSince": null
+    },
+    "Bybit-GRASS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.219Z",
+      "abnormalSince": null
+    },
+    "Bybit-GRIFFAIN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.220Z",
+      "abnormalSince": null
+    },
+    "Bybit-GRT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.220Z",
+      "abnormalSince": null
+    },
+    "Bybit-GTC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.220Z",
+      "abnormalSince": null
+    },
+    "Bybit-G": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.220Z",
+      "abnormalSince": null
+    },
+    "Bybit-HBAR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.220Z",
+      "abnormalSince": null
+    },
+    "Bybit-HFT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.221Z",
+      "abnormalSince": null
+    },
+    "Bybit-HIFI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.221Z",
+      "abnormalSince": null
+    },
+    "Bybit-HIGH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.221Z",
+      "abnormalSince": null
+    },
+    "Bybit-HIPPO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.221Z",
+      "abnormalSince": null
+    },
+    "Bybit-HIVE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.221Z",
+      "abnormalSince": null
+    },
+    "Bybit-HMSTR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.222Z",
+      "abnormalSince": null
+    },
+    "Bybit-HNT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.222Z",
+      "abnormalSince": null
+    },
+    "Bybit-HOOK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.222Z",
+      "abnormalSince": null
+    },
+    "Bybit-HOT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.222Z",
+      "abnormalSince": null
+    },
+    "Bybit-HPOS10I": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.222Z",
+      "abnormalSince": null
+    },
+    "Bybit-HYPE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.222Z",
+      "abnormalSince": null
+    },
+    "Bybit-ICP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.223Z",
+      "abnormalSince": null
+    },
+    "Bybit-ICX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.223Z",
+      "abnormalSince": null
+    },
+    "Bybit-IDEX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.223Z",
+      "abnormalSince": null
+    },
+    "Bybit-ID": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.223Z",
+      "abnormalSince": null
+    },
+    "Bybit-ILV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.224Z",
+      "abnormalSince": null
+    },
+    "Bybit-IMX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.224Z",
+      "abnormalSince": null
+    },
+    "Bybit-INJ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.224Z",
+      "abnormalSince": null
+    },
+    "Bybit-IOST": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.224Z",
+      "abnormalSince": null
+    },
+    "Bybit-IOTA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.224Z",
+      "abnormalSince": null
+    },
+    "Bybit-IOTX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.225Z",
+      "abnormalSince": null
+    },
+    "Bybit-IO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.225Z",
+      "abnormalSince": null
+    },
+    "Bybit-IP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.225Z",
+      "abnormalSince": null
+    },
+    "Bybit-JASMY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.225Z",
+      "abnormalSince": null
+    },
+    "Bybit-JELLYJELLY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.225Z",
+      "abnormalSince": null
+    },
+    "Bybit-JOE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.226Z",
+      "abnormalSince": null
+    },
+    "Bybit-JST": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.226Z",
+      "abnormalSince": null
+    },
+    "Bybit-JTO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.226Z",
+      "abnormalSince": null
+    },
+    "Bybit-JUP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.226Z",
+      "abnormalSince": null
+    },
+    "Bybit-J": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.226Z",
+      "abnormalSince": null
+    },
+    "Bybit-KAIA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.227Z",
+      "abnormalSince": null
+    },
+    "Bybit-KAS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.227Z",
+      "abnormalSince": null
+    },
+    "Bybit-KAVA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.227Z",
+      "abnormalSince": null
+    },
+    "Bybit-KDA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.227Z",
+      "abnormalSince": null
+    },
+    "Bybit-KMNO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.227Z",
+      "abnormalSince": null
+    },
+    "Bybit-KNC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.228Z",
+      "abnormalSince": null
+    },
+    "Bybit-KOMA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.228Z",
+      "abnormalSince": null
+    },
+    "Bybit-KSM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.228Z",
+      "abnormalSince": null
+    },
+    "Bybit-L3": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.228Z",
+      "abnormalSince": null
+    },
+    "Bybit-LAI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.229Z",
+      "abnormalSince": null
+    },
+    "Bybit-LDO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.229Z",
+      "abnormalSince": null
+    },
+    "Bybit-LEVER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.229Z",
+      "abnormalSince": null
+    },
+    "Bybit-LINA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.229Z",
+      "abnormalSince": null
+    },
+    "Bybit-LINK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.229Z",
+      "abnormalSince": null
+    },
+    "Bybit-LISTA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.229Z",
+      "abnormalSince": null
+    },
+    "Bybit-LOOKS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.230Z",
+      "abnormalSince": null
+    },
+    "Bybit-LPT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.230Z",
+      "abnormalSince": null
+    },
+    "Bybit-LQTY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.230Z",
+      "abnormalSince": null
+    },
+    "Bybit-LRC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.230Z",
+      "abnormalSince": null
+    },
+    "Bybit-LSK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.230Z",
+      "abnormalSince": null
+    },
+    "Bybit-LTC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.231Z",
+      "abnormalSince": null
+    },
+    "Bybit-LUCE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.231Z",
+      "abnormalSince": null
+    },
+    "Bybit-LUMIA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.231Z",
+      "abnormalSince": null
+    },
+    "Bybit-LUNA2": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.231Z",
+      "abnormalSince": null
+    },
+    "Bybit-MAGIC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.231Z",
+      "abnormalSince": null
+    },
+    "Bybit-MAJOR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.232Z",
+      "abnormalSince": null
+    },
+    "Bybit-MANA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.232Z",
+      "abnormalSince": null
+    },
+    "Bybit-MANEKI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.232Z",
+      "abnormalSince": null
+    },
+    "Bybit-MANTA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.232Z",
+      "abnormalSince": null
+    },
+    "Bybit-MASA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.232Z",
+      "abnormalSince": null
+    },
+    "Bybit-MASK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.233Z",
+      "abnormalSince": null
+    },
+    "Bybit-MAVIA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.233Z",
+      "abnormalSince": null
+    },
+    "Bybit-MAV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.233Z",
+      "abnormalSince": null
+    },
+    "Bybit-MAX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.233Z",
+      "abnormalSince": null
+    },
+    "Bybit-MBL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.233Z",
+      "abnormalSince": null
+    },
+    "Bybit-MBOX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.234Z",
+      "abnormalSince": null
+    },
+    "Bybit-MDT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.234Z",
+      "abnormalSince": null
+    },
+    "Bybit-MELANIA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.234Z",
+      "abnormalSince": null
+    },
+    "Bybit-MEMEFI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.234Z",
+      "abnormalSince": null
+    },
+    "Bybit-MEME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.234Z",
+      "abnormalSince": null
+    },
+    "Bybit-MERL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.234Z",
+      "abnormalSince": null
+    },
+    "Bybit-METIS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.235Z",
+      "abnormalSince": null
+    },
+    "Bybit-ME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.235Z",
+      "abnormalSince": null
+    },
+    "Bybit-MEW": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.235Z",
+      "abnormalSince": null
+    },
+    "Bybit-MICHI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.235Z",
+      "abnormalSince": null
+    },
+    "Bybit-MINA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.235Z",
+      "abnormalSince": null
+    },
+    "Bybit-MKR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.236Z",
+      "abnormalSince": null
+    },
+    "Bybit-MNT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.236Z",
+      "abnormalSince": null
+    },
+    "Bybit-MOBILE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.236Z",
+      "abnormalSince": null
+    },
+    "Bybit-MOCA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.236Z",
+      "abnormalSince": null
+    },
+    "Bybit-MON": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.237Z",
+      "abnormalSince": null
+    },
+    "Bybit-MOODENG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.237Z",
+      "abnormalSince": null
+    },
+    "Bybit-MORPHO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.237Z",
+      "abnormalSince": null
+    },
+    "Bybit-MOTHER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.237Z",
+      "abnormalSince": null
+    },
+    "Bybit-MOVE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.237Z",
+      "abnormalSince": null
+    },
+    "Bybit-MOVR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.237Z",
+      "abnormalSince": null
+    },
+    "Bybit-MTL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.238Z",
+      "abnormalSince": null
+    },
+    "Bybit-MVL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.238Z",
+      "abnormalSince": null
+    },
+    "Bybit-MYRIA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.238Z",
+      "abnormalSince": null
+    },
+    "Bybit-MYRO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.238Z",
+      "abnormalSince": null
+    },
+    "Bybit-NC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.238Z",
+      "abnormalSince": null
+    },
+    "Bybit-NEAR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.239Z",
+      "abnormalSince": null
+    },
+    "Bybit-NEIROETH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.239Z",
+      "abnormalSince": null
+    },
+    "Bybit-NEO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.239Z",
+      "abnormalSince": null
+    },
+    "Bybit-NFP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.239Z",
+      "abnormalSince": null
+    },
+    "Bybit-NKN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.239Z",
+      "abnormalSince": null
+    },
+    "Bybit-NMR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.240Z",
+      "abnormalSince": null
+    },
+    "Bybit-NOT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.240Z",
+      "abnormalSince": null
+    },
+    "Bybit-NS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.240Z",
+      "abnormalSince": null
+    },
+    "Bybit-NTRN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.240Z",
+      "abnormalSince": null
+    },
+    "Bybit-NULS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.240Z",
+      "abnormalSince": null
+    },
+    "Bybit-NYAN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.240Z",
+      "abnormalSince": null
+    },
+    "Bybit-OGN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.241Z",
+      "abnormalSince": null
+    },
+    "Bybit-OG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.241Z",
+      "abnormalSince": null
+    },
+    "Bybit-OL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.241Z",
+      "abnormalSince": null
+    },
+    "Bybit-OMG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.241Z",
+      "abnormalSince": null
+    },
+    "Bybit-OMNI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.242Z",
+      "abnormalSince": null
+    },
+    "Bybit-OM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.242Z",
+      "abnormalSince": null
+    },
+    "Bybit-ONDO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.242Z",
+      "abnormalSince": null
+    },
+    "Bybit-ONE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.242Z",
+      "abnormalSince": null
+    },
+    "Bybit-ONG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.242Z",
+      "abnormalSince": null
+    },
+    "Bybit-ONT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.243Z",
+      "abnormalSince": null
+    },
+    "Bybit-OP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.243Z",
+      "abnormalSince": null
+    },
+    "Bybit-ORBS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.243Z",
+      "abnormalSince": null
+    },
+    "Bybit-ORCA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.243Z",
+      "abnormalSince": null
+    },
+    "Bybit-ORDER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.243Z",
+      "abnormalSince": null
+    },
+    "Bybit-ORDI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.243Z",
+      "abnormalSince": null
+    },
+    "Bybit-OSMO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.244Z",
+      "abnormalSince": null
+    },
+    "Bybit-OXT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.244Z",
+      "abnormalSince": null
+    },
+    "Bybit-PAXG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.244Z",
+      "abnormalSince": null
+    },
+    "Bybit-PEAQ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.244Z",
+      "abnormalSince": null
+    },
+    "Bybit-PENDLE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.245Z",
+      "abnormalSince": null
+    },
+    "Bybit-PENGU": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.245Z",
+      "abnormalSince": null
+    },
+    "Bybit-PEOPLE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.245Z",
+      "abnormalSince": null
+    },
+    "Bybit-PERP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.245Z",
+      "abnormalSince": null
+    },
+    "Bybit-PHA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.246Z",
+      "abnormalSince": null
+    },
+    "Bybit-PHB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.246Z",
+      "abnormalSince": null
+    },
+    "Bybit-PIPPIN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.246Z",
+      "abnormalSince": null
+    },
+    "Bybit-PIRATE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.246Z",
+      "abnormalSince": null
+    },
+    "Bybit-PIXEL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.246Z",
+      "abnormalSince": null
+    },
+    "Bybit-PLUME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.247Z",
+      "abnormalSince": null
+    },
+    "Bybit-PNUT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.247Z",
+      "abnormalSince": null
+    },
+    "Bybit-POL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.247Z",
+      "abnormalSince": null
+    },
+    "Bybit-POLYX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.247Z",
+      "abnormalSince": null
+    },
+    "Bybit-PONKE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.247Z",
+      "abnormalSince": null
+    },
+    "Bybit-POPCAT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.247Z",
+      "abnormalSince": null
+    },
+    "Bybit-PORTAL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.248Z",
+      "abnormalSince": null
+    },
+    "Bybit-POWR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.248Z",
+      "abnormalSince": null
+    },
+    "Bybit-PRCL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.248Z",
+      "abnormalSince": null
+    },
+    "Bybit-PRIME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.248Z",
+      "abnormalSince": null
+    },
+    "Bybit-PROM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.248Z",
+      "abnormalSince": null
+    },
+    "Bybit-PROS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.249Z",
+      "abnormalSince": null
+    },
+    "Bybit-PUFFER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.249Z",
+      "abnormalSince": null
+    },
+    "Bybit-PYR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.249Z",
+      "abnormalSince": null
+    },
+    "Bybit-PYTH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.249Z",
+      "abnormalSince": null
+    },
+    "Bybit-QI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.249Z",
+      "abnormalSince": null
+    },
+    "Bybit-QNT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.250Z",
+      "abnormalSince": null
+    },
+    "Bybit-QTUM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.250Z",
+      "abnormalSince": null
+    },
+    "Bybit-QUICK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.250Z",
+      "abnormalSince": null
+    },
+    "Bybit-RAD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.250Z",
+      "abnormalSince": null
+    },
+    "Bybit-RARE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.250Z",
+      "abnormalSince": null
+    },
+    "Bybit-RAYDIUM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.251Z",
+      "abnormalSince": null
+    },
+    "Bybit-RDNT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.251Z",
+      "abnormalSince": null
+    },
+    "Bybit-RENDER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.251Z",
+      "abnormalSince": null
+    },
+    "Bybit-REN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.251Z",
+      "abnormalSince": null
+    },
+    "Bybit-REQ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.251Z",
+      "abnormalSince": null
+    },
+    "Bybit-REX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.252Z",
+      "abnormalSince": null
+    },
+    "Bybit-REZ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.252Z",
+      "abnormalSince": null
+    },
+    "Bybit-RIFSOL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.252Z",
+      "abnormalSince": null
+    },
+    "Bybit-RIF": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.252Z",
+      "abnormalSince": null
+    },
+    "Bybit-RLC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.252Z",
+      "abnormalSince": null
+    },
+    "Bybit-ROSE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.252Z",
+      "abnormalSince": null
+    },
+    "Bybit-RPL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.253Z",
+      "abnormalSince": null
+    },
+    "Bybit-RSR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.253Z",
+      "abnormalSince": null
+    },
+    "Bybit-RSS3": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.253Z",
+      "abnormalSince": null
+    },
+    "Bybit-RUNE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.253Z",
+      "abnormalSince": null
+    },
+    "Bybit-RVN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.253Z",
+      "abnormalSince": null
+    },
+    "Bybit-SAFE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.254Z",
+      "abnormalSince": null
+    },
+    "Bybit-SAGA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.254Z",
+      "abnormalSince": null
+    },
+    "Bybit-SAND": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.254Z",
+      "abnormalSince": null
+    },
+    "Bybit-SCA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.254Z",
+      "abnormalSince": null
+    },
+    "Bybit-SCRT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.254Z",
+      "abnormalSince": null
+    },
+    "Bybit-SCR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.255Z",
+      "abnormalSince": null
+    },
+    "Bybit-SC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.255Z",
+      "abnormalSince": null
+    },
+    "Bybit-SD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.255Z",
+      "abnormalSince": null
+    },
+    "Bybit-SEI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.255Z",
+      "abnormalSince": null
+    },
+    "Bybit-SEND": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.255Z",
+      "abnormalSince": null
+    },
+    "Bybit-SFP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.256Z",
+      "abnormalSince": null
+    },
+    "Bybit-SHIB1000": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.256Z",
+      "abnormalSince": null
+    },
+    "Bybit-SKL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.256Z",
+      "abnormalSince": null
+    },
+    "Bybit-SLERF": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.256Z",
+      "abnormalSince": null
+    },
+    "Bybit-SLF": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.256Z",
+      "abnormalSince": null
+    },
+    "Bybit-SLP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.257Z",
+      "abnormalSince": null
+    },
+    "Bybit-SNT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.257Z",
+      "abnormalSince": null
+    },
+    "Bybit-SNX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.257Z",
+      "abnormalSince": null
+    },
+    "Bybit-SOLO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.257Z",
+      "abnormalSince": null
+    },
+    "Bybit-SOL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.257Z",
+      "abnormalSince": null
+    },
+    "Bybit-SOLV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.257Z",
+      "abnormalSince": null
+    },
+    "Bybit-SONIC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.258Z",
+      "abnormalSince": null
+    },
+    "Bybit-SPEC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.258Z",
+      "abnormalSince": null
+    },
+    "Bybit-SPELL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.258Z",
+      "abnormalSince": null
+    },
+    "Bybit-SPX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.258Z",
+      "abnormalSince": null
+    },
+    "Bybit-SSV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.259Z",
+      "abnormalSince": null
+    },
+    "Bybit-STEEM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.259Z",
+      "abnormalSince": null
+    },
+    "Bybit-STG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.259Z",
+      "abnormalSince": null
+    },
+    "Bybit-STMX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.259Z",
+      "abnormalSince": null
+    },
+    "Bybit-STORJ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.259Z",
+      "abnormalSince": null
+    },
+    "Bybit-STPT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.260Z",
+      "abnormalSince": null
+    },
+    "Bybit-STRK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.260Z",
+      "abnormalSince": null
+    },
+    "Bybit-STX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.260Z",
+      "abnormalSince": null
+    },
+    "Bybit-SUI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.260Z",
+      "abnormalSince": null
+    },
+    "Bybit-SUNDOG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.260Z",
+      "abnormalSince": null
+    },
+    "Bybit-SUN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.261Z",
+      "abnormalSince": null
+    },
+    "Bybit-SUPER": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.261Z",
+      "abnormalSince": null
+    },
+    "Bybit-S": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.261Z",
+      "abnormalSince": null
+    },
+    "Bybit-SUSHI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.261Z",
+      "abnormalSince": null
+    },
+    "Bybit-SWARMS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.261Z",
+      "abnormalSince": null
+    },
+    "Bybit-SWEAT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.262Z",
+      "abnormalSince": null
+    },
+    "Bybit-SWELL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.262Z",
+      "abnormalSince": null
+    },
+    "Bybit-SXP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.262Z",
+      "abnormalSince": null
+    },
+    "Bybit-SYN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.262Z",
+      "abnormalSince": null
+    },
+    "Bybit-SYS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.262Z",
+      "abnormalSince": null
+    },
+    "Bybit-TAIKO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.263Z",
+      "abnormalSince": null
+    },
+    "Bybit-TAO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.263Z",
+      "abnormalSince": null
+    },
+    "Bybit-TAI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.263Z",
+      "abnormalSince": null
+    },
+    "Bybit-THETA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.263Z",
+      "abnormalSince": null
+    },
+    "Bybit-THE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.264Z",
+      "abnormalSince": null
+    },
+    "Bybit-TIA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.264Z",
+      "abnormalSince": null
+    },
+    "Bybit-TLM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.264Z",
+      "abnormalSince": null
+    },
+    "Bybit-TNSR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.264Z",
+      "abnormalSince": null
+    },
+    "Bybit-TOKEN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.264Z",
+      "abnormalSince": null
+    },
+    "Bybit-TON": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.264Z",
+      "abnormalSince": null
+    },
+    "Bybit-TRB": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.265Z",
+      "abnormalSince": null
+    },
+    "Bybit-TROY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.265Z",
+      "abnormalSince": null
+    },
+    "Bybit-TRUMP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.265Z",
+      "abnormalSince": null
+    },
+    "Bybit-TRU": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.265Z",
+      "abnormalSince": null
+    },
+    "Bybit-TRX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.265Z",
+      "abnormalSince": null
+    },
+    "Bybit-TSTBSC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.266Z",
+      "abnormalSince": null
+    },
+    "Bybit-T": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.266Z",
+      "abnormalSince": null
+    },
+    "Bybit-TWT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.266Z",
+      "abnormalSince": null
+    },
+    "Bybit-UMA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.266Z",
+      "abnormalSince": null
+    },
+    "Bybit-UNI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.266Z",
+      "abnormalSince": null
+    },
+    "Bybit-URO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.266Z",
+      "abnormalSince": null
+    },
+    "Bybit-USDC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.267Z",
+      "abnormalSince": null
+    },
+    "Bybit-USDE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.267Z",
+      "abnormalSince": null
+    },
+    "Bybit-USTC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.267Z",
+      "abnormalSince": null
+    },
+    "Bybit-USUAL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.267Z",
+      "abnormalSince": null
+    },
+    "Bybit-UXLINK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.268Z",
+      "abnormalSince": null
+    },
+    "Bybit-VANA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.268Z",
+      "abnormalSince": null
+    },
+    "Bybit-VANRY": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.268Z",
+      "abnormalSince": null
+    },
+    "Bybit-VELODROME": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.268Z",
+      "abnormalSince": null
+    },
+    "Bybit-VELO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.268Z",
+      "abnormalSince": null
+    },
+    "Bybit-VET": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.269Z",
+      "abnormalSince": null
+    },
+    "Bybit-VIDT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.269Z",
+      "abnormalSince": null
+    },
+    "Bybit-VINE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.269Z",
+      "abnormalSince": null
+    },
+    "Bybit-VIRTUAL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.269Z",
+      "abnormalSince": null
+    },
+    "Bybit-VOXEL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.269Z",
+      "abnormalSince": null
+    },
+    "Bybit-VRA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.270Z",
+      "abnormalSince": null
+    },
+    "Bybit-VR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.270Z",
+      "abnormalSince": null
+    },
+    "Bybit-VTHO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.270Z",
+      "abnormalSince": null
+    },
+    "Bybit-VVV": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.270Z",
+      "abnormalSince": null
+    },
+    "Bybit-WAVES": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.270Z",
+      "abnormalSince": null
+    },
+    "Bybit-WAXP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.271Z",
+      "abnormalSince": null
+    },
+    "Bybit-WIF": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.271Z",
+      "abnormalSince": null
+    },
+    "Bybit-WLD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.271Z",
+      "abnormalSince": null
+    },
+    "Bybit-WOO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.271Z",
+      "abnormalSince": null
+    },
+    "Bybit-W": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.271Z",
+      "abnormalSince": null
+    },
+    "Bybit-XAI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.271Z",
+      "abnormalSince": null
+    },
+    "Bybit-XCH": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.272Z",
+      "abnormalSince": null
+    },
+    "Bybit-XCN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.272Z",
+      "abnormalSince": null
+    },
+    "Bybit-XDC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.272Z",
+      "abnormalSince": null
+    },
+    "Bybit-XEM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.272Z",
+      "abnormalSince": null
+    },
+    "Bybit-XION": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.273Z",
+      "abnormalSince": null
+    },
+    "Bybit-XLM": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.273Z",
+      "abnormalSince": null
+    },
+    "Bybit-XMR": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.273Z",
+      "abnormalSince": null
+    },
+    "Bybit-XNO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.273Z",
+      "abnormalSince": null
+    },
+    "Bybit-XRD": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.273Z",
+      "abnormalSince": null
+    },
+    "Bybit-XRP": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.274Z",
+      "abnormalSince": null
+    },
+    "Bybit-XTZ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.274Z",
+      "abnormalSince": null
+    },
+    "Bybit-XVG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.274Z",
+      "abnormalSince": null
+    },
+    "Bybit-XVS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.274Z",
+      "abnormalSince": null
+    },
+    "Bybit-YFI": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.274Z",
+      "abnormalSince": null
+    },
+    "Bybit-YGG": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.274Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZBCN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.275Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZEC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.275Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZENT": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.275Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZEN": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.275Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZEREBRO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.275Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZETA": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.276Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZEUS": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.276Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZIL": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.276Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZKJ": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.276Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZK": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.276Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZRC": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.277Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZRO": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.277Z",
+      "abnormalSince": null
+    },
+    "Bybit-ZRX": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.277Z",
+      "abnormalSince": null
+    },
+    "Bybit-1000000BABYDOGE": {
+      "normalInterval": true,
+      "lastChecked": "2025-02-11T12:57:18.174Z",
+      "abnormalSince": null
+    }
+  }
+}
