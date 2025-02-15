@@ -14,6 +14,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false); // 組件掛載狀態，用於解決 SSR 問題
   const [isUpdating, setIsUpdating] = useState(false); // 添加更新狀態
   const [showInterval, setShowInterval] = useState(false); // 添加顯示模式狀態
+  const [showNormalized, setShowNormalized] = useState(false); // 添加標準化顯示狀態
   const [selectedExchanges, setSelectedExchanges] = useState(new Set(['Binance', 'Bybit', 'OKX', 'Bitget', 'HyperLiquid']));
   const allExchanges = [
     { id: 'Binance', order: 1 },
@@ -216,10 +217,17 @@ export default function Home() {
             </div>
             <button 
               onClick={() => setShowInterval(!showInterval)}
-              className="display-toggle"
+              className={`display-toggle ${showInterval ? 'active' : ''}`}
               title={showInterval ? "切換為星號顯示" : "切換為小時顯示"}
             >
               {showInterval ? "星號" : "小時"}
+            </button>
+            <button 
+              onClick={() => setShowNormalized(!showNormalized)}
+              className={`display-toggle ${showNormalized ? 'active' : ''}`}
+              title={showNormalized ? "顯示當前費率" : "顯示8小時費率"}
+            >
+              {showNormalized ? "當前" : "8 H"}
             </button>
             <button 
               onClick={toggleTheme}
@@ -279,11 +287,16 @@ export default function Home() {
                           >
                             {data ? (
                               <>
-                                {parseFloat(data.currentRate.split('(')[0])}%
+                                {showNormalized && data.settlementInterval && data.settlementInterval !== 8 ? (
+                                  // 標準化為8小時費率
+                                  `${(parseFloat(data.currentRate) * (8 / data.settlementInterval)).toFixed(4)}%`
+                                ) : (
+                                  `${parseFloat(data.currentRate)}%`
+                                )}
                                 {data.isSpecialInterval && (
                                   <span 
                                     style={{ color: '#ffd700' }} 
-                                    title={`每${data.settlementInterval}小時結算`}
+                                    title={`每${data.settlementInterval}小時結算${showNormalized ? ' (已轉換為8小時)' : ''}`}
                                   >
                                     {showInterval ? `${data.settlementInterval}H` : '*'}
                                   </span>
@@ -353,20 +366,33 @@ export default function Home() {
 
         .display-toggle {
           padding: 5px 10px;
-          border: 1px solid #ccc;
+          border: 1px solid var(--table-border);
           border-radius: 4px;
-          background: transparent;
+          background: var(--bg-color);
           cursor: pointer;
-          color: inherit;
+          color: var(--text-color);
+          transition: all 0.3s ease;
+          min-width: 56px;
+          text-align: center;
+          display: inline-block;
+          font-size: 14px;
+          line-height: 1.5;
         }
 
         .display-toggle:hover {
-          background: rgba(128, 128, 128, 0.1);
+          background: var(--hover-bg);
         }
 
-        /* 深色模式樣式 */
-        :global(.dark-mode) .display-toggle {
-          border-color: #666;
+        .display-toggle.active {
+          background: var(--text-color);
+          color: var(--bg-color);
+          border-color: var(--text-color);
+        }
+
+        /* 深色模式適配 */
+        :global(.dark-mode) .display-toggle.active {
+          background: var(--text-color);
+          color: var(--bg-color);
         }
 
         .theme-toggle {
