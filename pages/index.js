@@ -290,7 +290,16 @@ export default function Home() {
                 <tbody>
                   {sortedSymbols.map(symbol => (
                     <tr key={symbol}>
-                      <td>{symbol}</td>
+                      <td>
+                        <a
+                          href={`/history/${symbol}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="symbol-link"
+                        >
+                          {symbol}
+                        </a>
+                      </td>
                       {exchanges.map(exchange => {
                         const data = groupedRates[symbol][exchange];
                         return (
@@ -584,6 +593,18 @@ export default function Home() {
         /* 深色模式適配 */
         :global(.dark-mode) .dropdown-content {
           box-shadow: 0 8px 16px rgba(255,255,255,0.1);
+        }
+
+        .symbol-link {
+          color: var(--text-color);
+          text-decoration: none;
+          cursor: pointer;
+          transition: opacity 0.3s;
+        }
+
+        .symbol-link:hover {
+          opacity: 0.7;
+          text-decoration: underline;
         }
       `}</style>
     </div>
