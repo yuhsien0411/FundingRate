@@ -84,7 +84,6 @@ export default async function handler(req, res) {
     });
 
     // 處理 HyperLiquid 數據
-    // HyperLiquid 返回的是一個包含兩個元素的數組：[metadata, assetContexts]
     const [metadata, assetContexts] = hyperliquidData;
     const hyperliquidRates = metadata.universe.map((asset, index) => {
       const assetData = assetContexts[index];
@@ -93,7 +92,9 @@ export default async function handler(req, res) {
       return {
         symbol: asset.name,
         exchange: 'HyperLiquid',
-        currentRate: rate
+        currentRate: rate,
+        isSpecialInterval: true,  // HyperLiquid 固定 1 小時結算
+        settlementInterval: 1     // 設置結算週期為 1 小時
       };
     });
 

@@ -143,11 +143,25 @@ export default function Home() {
     if (sortConfig.key === 'symbol') {
       return sortConfig.direction === 'asc' ? a.localeCompare(b) : b.localeCompare(a);
     } else if (exchangeSort.exchange) {
-      const aRate = groupedRates[a][exchangeSort.exchange]?.currentRate.split('(')[0] || '-999';
-      const bRate = groupedRates[b][exchangeSort.exchange]?.currentRate.split('(')[0] || '-999';
+      const aData = groupedRates[a][exchangeSort.exchange];
+      const bData = groupedRates[b][exchangeSort.exchange];
+      
+      // 獲取費率（考慮標準化顯示）
+      const getRate = (data) => {
+        if (!data) return -999;
+        const baseRate = parseFloat(data.currentRate);
+        if (showNormalized && data.settlementInterval && data.settlementInterval !== 8) {
+          return baseRate * (8 / data.settlementInterval);
+        }
+        return baseRate;
+      };
+
+      const aRate = getRate(aData);
+      const bRate = getRate(bData);
+
       return exchangeSort.direction === 'asc' ? 
-        parseFloat(aRate) - parseFloat(bRate) : 
-        parseFloat(bRate) - parseFloat(aRate);
+        aRate - bRate : 
+        bRate - aRate;
     }
     return 0;
   });
