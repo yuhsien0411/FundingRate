@@ -330,19 +330,20 @@ export default function HistoryPage() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              type: 'fundingRates',
-              coin: symbol
+              type: 'metaAndAssetCtxs'
             })
           });
           const hyperData = await hyperRes.json();
-          if (Array.isArray(hyperData) && hyperData.length > 0) {
-            currentData.rates.HyperLiquid = {
-              rate: (parseFloat(hyperData[0].fundingRate) * 100).toFixed(4),
-              hourlyRates: hyperData.map(item => ({
-                time: new Date(item.time).toLocaleString(),
-                rate: (parseFloat(item.fundingRate) * 100).toFixed(4)
-              }))
-            };
+          if (Array.isArray(hyperData) && hyperData.length === 2) {
+            const [metadata, assetContexts] = hyperData;
+            const assetIndex = metadata.universe.findIndex(asset => asset.name === symbol);
+            if (assetIndex !== -1 && assetContexts[assetIndex]) {
+              const currentRate = (parseFloat(assetContexts[assetIndex].funding) * 100).toFixed(4);
+              currentData.rates.HyperLiquid = {
+                rate: currentRate,
+                hourlyRates: null  // 當前費率不需要小時數據
+              };
+            }
           }
         } catch (error) {
           console.error('HyperLiquid current rate error:', error);
@@ -378,7 +379,8 @@ export default function HistoryPage() {
       if (!timeGroups[timeKey]) {
         timeGroups[timeKey] = {};
       }
-      timeGroups[timeKey][item.exchange] = parseFloat(item.rate);
+      // 確保將資金費率為 0 的數據點也包含進來
+      timeGroups[timeKey][item.exchange] = item.rate;
     });
 
     const labels = Object.keys(timeGroups).reverse();
@@ -386,14 +388,18 @@ export default function HistoryPage() {
       .filter(exchange => selectedExchange === 'all' || selectedExchange === exchange)
       .map(exchange => ({
         label: exchange,
-        data: labels.map(time => timeGroups[time][exchange] || null),
+        data: labels.map(time => {
+          const value = timeGroups[time][exchange];
+          // 如果值存在（包括 0），則返回該值，否則返回 null
+          return value !== undefined ? value : null;
+        }),
         borderColor: exchangeColors[exchange],
         backgroundColor: exchangeColors[exchange],
-        tension: 0.4,  // 線條平滑度
-        pointRadius: 3,  // 數據點大小
-        pointHoverRadius: 6,  // 懸停時數據點大小
-        borderWidth: 2,  // 線條寬度
-        spanGaps: true,  // 連接空值之間的線條
+        tension: 0.4,
+        pointRadius: 3,
+        pointHoverRadius: 6,
+        borderWidth: 2,
+        spanGaps: true,
         order: exchangeOrder.indexOf(exchange)
       }));
 
@@ -405,12 +411,15 @@ export default function HistoryPage() {
     if (!rates?.hourlyRates) return;
     
     const rect = event.currentTarget.getBoundingClientRect();
-    setTooltipContent(
-      rates.hourlyRates.map(hr => `${hr.time}: ${hr.rate}%`).join('\n')
-    );
+    const content = rates.hourlyRates
+      .filter(hr => hr.isHourly)  // 只顯示小時數據
+      .map(hr => `${hr.time}: ${hr.rate}%`)
+      .join('\n');
+
+    setTooltipContent(content);
     setTooltipPosition({
-      x: rect.left + window.scrollX,
-      y: rect.top + window.scrollY
+      x: rect.left + (rect.width / 2),
+      y: rect.top - 10
     });
   };
 
@@ -524,11 +533,14 @@ export default function HistoryPage() {
                   {/* 歷史數據行 */}
                   {Object.entries(
                     historyData?.data.reduce((acc, item) => {
+                      // 跳過 API 返回的當前數據
+                      if (item.isCurrent) return acc;
+                      
                       const timeKey = new Date(item.time).toLocaleString();
                       if (!acc[timeKey]) {
                         acc[timeKey] = {};
                       }
-                      acc[timeKey][item.exchange] = item.rate;
+                      acc[timeKey][item.exchange] = item;
                       return acc;
                     }, {})
                   ).sort((a, b) => new Date(b[0]) - new Date(a[0]))
@@ -538,12 +550,12 @@ export default function HistoryPage() {
                       {exchangeOrder.map(exchange => (
                         <td 
                           key={exchange}
-                          className={`${rates[exchange] && parseFloat(rates[exchange]) > 0 ? 'positive-rate' : 'negative-rate'}`}
-                          onMouseEnter={(e) => exchange === 'HyperLiquid' && handleMouseEnter(e, rates[exchange])}
+                          className={`${rates[exchange]?.rate && parseFloat(rates[exchange].rate) > 0 ? 'positive-rate' : 'negative-rate'}`}
+                          onMouseEnter={(e) => exchange === 'HyperLiquid' && rates[exchange]?.hourlyRates && handleMouseEnter(e, rates[exchange])}
                           onMouseLeave={handleMouseLeave}
                         >
-                          {rates[exchange] ? `${rates[exchange]}%` : '-'}
-                          {exchange === 'HyperLiquid' && rates[exchange] && (
+                          {rates[exchange]?.rate ? `${rates[exchange].rate}%` : '-'}
+                          {exchange === 'HyperLiquid' && rates[exchange]?.hourlyRates && (
                             <span className="info-icon">ℹ</span>
                           )}
                         </td>
@@ -562,11 +574,39 @@ export default function HistoryPage() {
         <div 
           className="tooltip"
           style={{
+            position: 'fixed',
             left: `${tooltipPosition.x}px`,
-            top: `${tooltipPosition.y}px`
+            top: `${tooltipPosition.y}px`,
+            transform: 'translate(-50%, -100%)',
+            zIndex: 10000,
+            background: 'rgba(0, 0, 0, 0.9)',
+            color: 'white',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            fontSize: '12px',
+            lineHeight: 1.4,
+            whiteSpace: 'pre',
+            pointerEvents: 'none',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+            maxWidth: '300px',
+            maxHeight: '200px',
+            overflowY: 'auto'
           }}
         >
           {tooltipContent}
+          <div 
+            style={{
+              position: 'absolute',
+              left: '50%',
+              bottom: '-6px',
+              transform: 'translateX(-50%)',
+              width: 0,
+              height: 0,
+              borderLeft: '6px solid transparent',
+              borderRight: '6px solid transparent',
+              borderTop: '6px solid rgba(0, 0, 0, 0.9)'
+            }}
+          />
         </div>
       )}
 
@@ -746,17 +786,40 @@ export default function HistoryPage() {
           pointer-events: none;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
           max-width: 300px;
+          max-height: 200px;
+          overflow-y: auto;
           margin-top: -8px;
         }
 
-        .tooltip:after {
-          content: '';
-          position: absolute;
-          bottom: -8px;
-          left: 50%;
-          transform: translateX(-50%);
-          border: 4px solid transparent;
-          border-top-color: rgba(0, 0, 0, 0.9);
+        .tooltip::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .tooltip::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+
+        .tooltip::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.3);
+          border-radius: 3px;
+        }
+
+        .hyperliquid-cell {
+          position: relative;
+          cursor: pointer;
+        }
+
+        .hyperliquid-cell:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .info-icon {
+          display: inline-block;
+          margin-left: 4px;
+          font-size: 0.8em;
+          color: #666;
+          cursor: help;
         }
 
         // 移動端響應式
