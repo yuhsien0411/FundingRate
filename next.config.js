@@ -1,6 +1,31 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // 禁用 webpack HMR (Hot Module Replacement)
+  webpack: (config, { dev, isServer }) => {
+    if (dev && !isServer) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        poll: false,
+        followSymlinks: false,
+      };
+    }
+    return config;
+  },
+  // 添加自定義 headers 來防止不必要的請求
+  async headers() {
+    return [
+      {
+        source: '/socket.io/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          },
+        ],
+      },
+    ];
+  },
   async rewrites() {
     return [
       {

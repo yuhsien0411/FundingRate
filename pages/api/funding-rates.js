@@ -1,31 +1,123 @@
+// 使用 Next.js 的內置 API 路由處理 WebSocket
+import { Server } from 'socket.io';
+
+// 緩存配置
+const CACHE_DURATION = 60000; // 1分鐘
+let cachedData = null;
+let lastCacheTime = 0;
+
+// 創建 socket.io 實例
+let io;
+
+if (!global.io) {
+  global.io = new Server();
+}
+io = global.io;
+
+// 主要的 API 處理函數
 export default async function handler(req, res) {
+  // 設置 Socket.IO
+  if (!res.socket.server.io) {
+    io.attach(res.socket.server);
+    res.socket.server.io = io;
+  }
+
+  // 如果是 WebSocket 請求
+  if (req.headers.upgrade === 'websocket') {
+    res.end();
+    return;
+  }
+
   try {
-    // 並行請求各交易所的 API
-    const [
-      binanceRatesRes, 
-      binanceFundingInfoRes, 
-      bybitRatesRes, 
-      bybitInstrumentsRes,
-      bitgetRatesRes, 
-      bitgetContractsRes,
-      okxTickersRes,  // 先獲取所有 USDT 永續合約
-      okxInstrumentsRes,
-      hyperliquidRes
-    ] = await Promise.all([
-      fetch('https://fapi.binance.com/fapi/v1/premiumIndex'),
-      fetch('https://fapi.binance.com/fapi/v1/fundingInfo'),
-      fetch('https://api.bybit.com/v5/market/tickers?category=linear'),
-      fetch('https://api.bybit.com/v5/market/instruments-info?category=linear'),
-      fetch('https://api.bitget.com/api/v2/mix/market/tickers?productType=USDT-FUTURES'),
-      fetch('https://api.bitget.com/api/v2/mix/market/contracts?productType=usdt-futures'),
-      fetch('https://www.okx.com/api/v5/market/tickers?instType=SWAP'),  // 獲取所有永續合約
-      fetch('https://www.okx.com/api/v5/public/instruments?instType=SWAP'),
-      fetch('https://api.hyperliquid.xyz/info', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'metaAndAssetCtxs' })
+    const currentTime = Date.now();
+    
+    // 檢查緩存是否有效
+    if (cachedData && currentTime - lastCacheTime < CACHE_DURATION) {
+      return res.status(200).json(cachedData);
+    }
+
+    // 獲取新數據
+    const data = await fetchAllExchangeData();
+    
+    // 更新緩存
+    cachedData = data;
+    lastCacheTime = currentTime;
+
+    // 通過 WebSocket 廣播新數據
+    if (io) {
+      io.emit('funding-rates-update', data);
+    }
+
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error fetching funding rates:', error);
+    res.status(500).json({ error: 'Failed to fetch funding rates' });
+  }
+}
+
+async function fetchAllExchangeData() {
+  try {
+    console.log('開始獲取交易所數據...');
+    
+    const apiCalls = [
+      { name: 'Binance Rates', url: 'https://fapi.binance.com/fapi/v1/premiumIndex' },
+      { name: 'Binance Funding Info', url: 'https://fapi.binance.com/fapi/v1/fundingInfo' },
+      { name: 'Bybit Rates', url: 'https://api.bybit.com/v5/market/tickers?category=linear' },
+      { name: 'Bybit Instruments', url: 'https://api.bybit.com/v5/market/instruments-info?category=linear' },
+      { 
+        name: 'Bitget Rates', 
+        url: 'https://api.bitget.com/api/v2/mix/market/tickers?productType=USDT-FUTURES',
+        options: {
+          headers: {
+            'Content-Type': 'application/json',
+            'locale': 'zh-CN'
+          }
+        }
+      },
+      { 
+        name: 'Bitget Contracts', 
+        url: 'https://api.bitget.com/api/v2/mix/market/contracts?productType=USDT-FUTURES',
+        options: {
+          headers: {
+            'Content-Type': 'application/json',
+            'locale': 'zh-CN'
+          }
+        }
+      },
+      { name: 'OKX Tickers', url: 'https://www.okx.com/api/v5/public/mark-price?instType=SWAP' },
+      { name: 'OKX Instruments', url: 'https://www.okx.com/api/v5/public/instruments?instType=SWAP' },
+      { 
+        name: 'Hyperliquid', 
+        url: 'https://api.hyperliquid.xyz/info',
+        options: {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'metaAndAssetCtxs' })
+        }
+      }
+    ];
+
+    const responses = await Promise.all(
+      apiCalls.map(async ({ name, url, options = {} }) => {
+        try {
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const text = await response.text();
+          try {
+            return JSON.parse(text);
+          } catch (e) {
+            console.error(`JSON 解析錯誤 (${name}):`, e);
+            console.error('收到的響應:', text.substring(0, 200) + '...');
+            return null;
+          }
+        } catch (error) {
+          console.error(`${name} API 調用失敗:`, error);
+          return null;
+        }
       })
-    ]);
+    );
 
     const [
       binanceRatesData, 
@@ -34,114 +126,126 @@ export default async function handler(req, res) {
       bybitInstrumentsData,
       bitgetRatesData, 
       bitgetContractsData,
-      okxTickersData,  // 先獲取所有 USDT 永續合約
+      okxTickersData,
       okxInstrumentsData,
       hyperliquidData
-    ] = await Promise.all([
-      binanceRatesRes.json(),
-      binanceFundingInfoRes.json(),
-      bybitRatesRes.json(),
-      bybitInstrumentsRes.json(),
-      bitgetRatesRes.json(),
-      bitgetContractsRes.json(),
-      okxTickersRes.json(),  // 先獲取所有 USDT 永續合約
-      okxInstrumentsRes.json(),
-      hyperliquidRes.json()
-    ]);
+    ] = responses;
+
+    // 檢查是否所有必需的數據都成功獲取
+    if (!binanceRatesData || !bybitRatesData || !bitgetRatesData || !okxTickersData) {
+      console.error('部分關鍵數據獲取失敗:', {
+        binanceRatesData: !!binanceRatesData,
+        bybitRatesData: !!bybitRatesData,
+        bitgetRatesData: !!bitgetRatesData,
+        okxTickersData: !!okxTickersData
+      });
+    }
 
     // 創建幣安結算週期映射
     const binanceIntervals = {};
-    binanceFundingInfoData.forEach(info => {
-      binanceIntervals[info.symbol] = parseInt(info.fundingIntervalHours) || 8;
-    });
+    if (binanceFundingInfoData) {
+      binanceFundingInfoData.forEach(info => {
+        binanceIntervals[info.symbol] = parseInt(info.fundingIntervalHours) || 8;
+      });
+    }
 
     // 創建 Bybit 結算週期映射
     const bybitIntervals = {};
-    bybitInstrumentsData.result.list.forEach(instrument => {
-      // 將分鐘轉換為小時
-      bybitIntervals[instrument.symbol] = (parseInt(instrument.fundingInterval) || 480) / 60;
-    });
+    if (bybitInstrumentsData?.result?.list) {
+      bybitInstrumentsData.result.list.forEach(instrument => {
+        bybitIntervals[instrument.symbol] = (parseInt(instrument.fundingInterval) || 480) / 60;
+      });
+    }
 
     // 處理幣安數據
     const binanceRates = binanceRatesData
-      .filter(item => item.symbol.endsWith('USDT'))
-      .map(item => {
-        const interval = binanceIntervals[item.symbol] || 8; // 使用合約信息中的結算週期
-        
-        return {
-          symbol: item.symbol.replace('USDT', ''),
-          exchange: 'Binance',
-          currentRate: (parseFloat(item.lastFundingRate) * 100).toFixed(4),
-          isSpecialInterval: interval !== 8,  // 如果不是8小時就標記
-          settlementInterval: interval  // 使用實際的結算間隔
-        };
-      });
+      ? binanceRatesData
+          .filter(item => item.symbol.endsWith('USDT'))
+          .map(item => {
+            const interval = binanceIntervals[item.symbol] || 8;
+            return {
+              symbol: item.symbol.replace('USDT', ''),
+              exchange: 'Binance',
+              currentRate: (parseFloat(item.lastFundingRate) * 100).toFixed(4),
+              isSpecialInterval: interval !== 8,
+              settlementInterval: interval
+            };
+          })
+      : [];
 
     // 創建 Bitget 合約結算週期映射
     const bitgetIntervals = {};
-    bitgetContractsData.data.forEach(contract => {
-      bitgetIntervals[contract.symbol] = parseInt(contract.fundInterval) || 8;
-    });
+    if (bitgetContractsData?.data) {
+      bitgetContractsData.data.forEach(contract => {
+        bitgetIntervals[contract.symbol] = parseInt(contract.fundInterval) || 8;
+      });
+    }
 
     // 處理 HyperLiquid 數據
-    const [metadata, assetContexts] = hyperliquidData;
-    const hyperliquidRates = metadata.universe.map((asset, index) => {
-      const assetData = assetContexts[index];
-      // 將資金費率轉換為百分比並保留4位小數
-      const rate = (parseFloat(assetData.funding) * 100).toFixed(4);
-      return {
-        symbol: asset.name,
-        exchange: 'HyperLiquid',
-        currentRate: rate,
-        isSpecialInterval: true,  // HyperLiquid 固定 1 小時結算
-        settlementInterval: 1     // 設置結算週期為 1 小時
-      };
-    });
+    let hyperliquidRates = [];
+    if (hyperliquidData) {
+      try {
+        const [metadata, assetContexts] = hyperliquidData;
+        hyperliquidRates = metadata.universe.map((asset, index) => {
+          const assetData = assetContexts[index];
+          const rate = (parseFloat(assetData.funding) * 100).toFixed(4);
+          return {
+            symbol: asset.name,
+            exchange: 'HyperLiquid',
+            currentRate: rate,
+            isSpecialInterval: true,
+            settlementInterval: 1
+          };
+        });
+      } catch (error) {
+        console.error('HyperLiquid 數據處理錯誤:', error);
+      }
+    }
 
     // 處理 Bybit 數據
-    const bybitRates = bybitRatesData.result.list
-      .filter(item => item.symbol.endsWith('USDT') && item.fundingRate)
-      .map(item => {
-        try {
-          const interval = bybitIntervals[item.symbol] || 8; // 使用合約信息中的結算週期
-          
-          return {
-            symbol: item.symbol.replace('USDT', ''),
-            exchange: 'Bybit',
-            currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4),
-            isSpecialInterval: interval !== 8,  // 如果不是8小時就標記
-            settlementInterval: interval  // 使用實際的結算間隔
-          };
-        } catch (error) {
-          console.error('Bybit data processing error:', error, item);
-          return {
-            symbol: item.symbol.replace('USDT', ''),
-            exchange: 'Bybit',
-            currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4)
-          };
-        }
-      });
+    const bybitRates = bybitRatesData?.result?.list
+      ? bybitRatesData.result.list
+          .filter(item => item.symbol.endsWith('USDT') && item.fundingRate)
+          .map(item => {
+            try {
+              const interval = bybitIntervals[item.symbol] || 8;
+              return {
+                symbol: item.symbol.replace('USDT', ''),
+                exchange: 'Bybit',
+                currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4),
+                isSpecialInterval: interval !== 8,
+                settlementInterval: interval
+              };
+            } catch (error) {
+              console.error('Bybit 數據處理錯誤:', error, item);
+              return null;
+            }
+          })
+          .filter(item => item !== null)
+      : [];
 
     // 處理 Bitget 數據
-    const bitgetRates = (bitgetRatesData.data || [])
-      .filter(item => item.symbol && item.fundingRate)
-      .map(item => {
-        try {
-          const interval = bitgetIntervals[item.symbol] || 8; // 使用合約信息中的結算週期
-          
-          return {
-            symbol: item.symbol.replace('USDT', ''),
-            exchange: 'Bitget',
-            currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4),
-            isSpecialInterval: interval !== 8,  // 如果不是8小時就標記
-            settlementInterval: interval  // 使用實際的結算間隔
-          };
-        } catch (error) {
-          console.error('Bitget data processing error:', error, item);
-          return null;
-        }
-      })
-      .filter(item => item !== null);
+    const bitgetRates = bitgetRatesData?.data
+      ? bitgetRatesData.data
+          .filter(item => item.symbol && item.fundingRate)
+          .map(item => {
+            try {
+              const symbol = item.symbol.replace('USDT', '');
+              const interval = bitgetIntervals[item.symbol] || 8;
+              return {
+                symbol,
+                exchange: 'Bitget',
+                currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4),
+                isSpecialInterval: interval !== 8,
+                settlementInterval: interval
+              };
+            } catch (error) {
+              console.error('Bitget 數據處理錯誤:', error, item);
+              return null;
+            }
+          })
+          .filter(item => item !== null)
+      : [];
 
     // 創建 OKX 結算週期映射
     const okxIntervals = {};
@@ -207,14 +311,14 @@ export default async function handler(req, res) {
       .filter(item => item !== null);
 
     // 添加更詳細的調試日誌
-    console.log('OKX Debug:', {
-      contractsCount: okxUsdtContracts.length,
-      ratesCount: okxFundingRatesData.length,
-      processedCount: okxRates.length,
-      sampleContract: okxUsdtContracts[0],
-      sampleRate: okxFundingRatesData[0]?.data?.[0],
-      sampleInterval: okxRates[0]?.settlementInterval
-    });
+    // console.log('OKX Debug:', {
+    //   contractsCount: okxUsdtContracts.length,
+    //   ratesCount: okxFundingRatesData.length,
+    //   processedCount: okxRates.length,
+    //   sampleContract: okxUsdtContracts[0],
+    //   sampleRate: okxFundingRatesData[0]?.data?.[0],
+    //   sampleInterval: okxRates[0]?.settlementInterval
+    // });
 
     // 合併所有交易所的數據
     const allRates = [
@@ -231,22 +335,39 @@ export default async function handler(req, res) {
         parseFloat(item.currentRate) !== 0;
     });
 
-    // 返回成功響應
-    res.status(200).json({
+    console.log('數據處理完成，各交易所數據數量:', {
+      binance: binanceRates?.length || 0,
+      bybit: bybitRates?.length || 0,
+      bitget: bitgetRates?.length || 0,
+      okx: okxRates?.length || 0,
+      hyperliquid: hyperliquidRates?.length || 0
+    });
+
+    return {
       success: true,
       data: allRates,
-      // 添加調試信息，顯示各交易所的數據數量
       debug: {
-        bitgetCount: bitgetRates.length,
-        binanceCount: binanceRates.length,
-        bybitCount: bybitRates.length,
-        okxCount: okxRates.length,
-        hyperliquidCount: hyperliquidRates.length
+        bitgetCount: bitgetRates?.length || 0,
+        binanceCount: binanceRates?.length || 0,
+        bybitCount: bybitRates?.length || 0,
+        okxCount: okxRates?.length || 0,
+        hyperliquidCount: hyperliquidRates?.length || 0,
+        totalCount: allRates.length
       }
-    });
+    };
   } catch (error) {
-    // 錯誤處理
-    console.error('API Error:', error);
-    res.status(500).json({ error: '獲取資料失敗', details: error.message });
+    console.error('fetchAllExchangeData 發生錯誤:', error);
+    return {
+      success: false,
+      data: [],
+      error: error.message
+    };
   }
 }
+
+// 配置 API 路由以支持 WebSocket
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};

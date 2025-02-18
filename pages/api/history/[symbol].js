@@ -1,22 +1,43 @@
+// 定義需要忽略的幣種
+const IGNORED_SYMBOLS = {
+  'CETUS': '由於 OKX API 返回的 CETUS 資金費率數據不準確，暫時忽略此幣種'
+};
+
 export default async function handler(req, res) {
   const { symbol, timeRange = '24h', exchange = 'all' } = req.query;
 
+  // 檢查是否為需要忽略的幣種
+  if (exchange === 'OKX' && IGNORED_SYMBOLS[symbol]) {
+    return res.status(200).json({
+      success: true,
+      symbol,
+      data: [],
+      message: IGNORED_SYMBOLS[symbol]
+    });
+  }
+
   try {
-    // 根據時間範圍計算開始時間
+    // 根據時間範圍計算開始時間，並調整 API 請求限制
     const now = new Date();
     let startTime;
+    let limit;  // API 請求數量限制
+
     switch (timeRange) {
       case '24h':
         startTime = new Date(now - 24 * 60 * 60 * 1000);
+        limit = 50;  // 24小時約需要 6-8 個數據點
         break;
       case '7d':
         startTime = new Date(now - 7 * 24 * 60 * 60 * 1000);
+        limit = 100;  // 7天約需要 42 個數據點
         break;
       case '30d':
         startTime = new Date(now - 30 * 24 * 60 * 60 * 1000);
+        limit = 200;  // 30天約需要 180 個數據點
         break;
       default:
         startTime = new Date(now - 24 * 60 * 60 * 1000);
+        limit = 50;
     }
 
     // 初始化所有交易所的數據
@@ -56,7 +77,7 @@ export default async function handler(req, res) {
     try {
       // 獲取 Binance 歷史數據
       const binanceRes = await fetch(
-        `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol}USDT&limit=200`
+        `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol}USDT&limit=${limit}`
       );
       const binanceData = await binanceRes.json();
       if (Array.isArray(binanceData)) {
@@ -66,7 +87,6 @@ export default async function handler(req, res) {
           rate: (parseFloat(item.fundingRate) * 100).toFixed(4),
           interval: 8
         }));
-        minInterval = Math.min(minInterval, 8);
       }
     } catch (error) {
       console.error('Binance API Error:', error);
@@ -110,17 +130,19 @@ export default async function handler(req, res) {
 
     try {
       // 獲取 OKX 歷史數據
-      const okxRes = await fetch(
-        `https://www.okx.com/api/v5/public/funding-rate-history?instId=${symbol}-USDT-SWAP&limit=100`
-      );
-      const okxData = await okxRes.json();
-      if (okxData.data) {
-        formattedData.OKX = okxData.data.map(item => ({
-          exchange: 'OKX',
-          time: new Date(parseInt(item.fundingTime)).toISOString(),
-          rate: (parseFloat(item.fundingRate) * 100).toFixed(4),
-          interval: 8
-        }));
+      if (symbol !== 'CETUS') {  // 忽略 CETUS
+        const okxRes = await fetch(
+          `https://www.okx.com/api/v5/public/funding-rate-history?instId=${symbol}-USDT-SWAP&limit=100`
+        );
+        const okxData = await okxRes.json();
+        if (okxData.data) {
+          formattedData.OKX = okxData.data.map(item => ({
+            exchange: 'OKX',
+            time: new Date(parseInt(item.fundingTime)).toISOString(),
+            rate: (parseFloat(item.fundingRate) * 100).toFixed(4),
+            interval: 8
+          }));
+        }
       }
     } catch (error) {
       console.error('OKX API Error:', error);
@@ -218,7 +240,7 @@ export default async function handler(req, res) {
       success: false,
       error: '獲取歷史資料失敗', 
       details: error.message,
-      data: []  // 錯誤時也返回空數組
+      data: []
     });
   }
 } 

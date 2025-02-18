@@ -64,19 +64,33 @@ const getChartOptions = (data) => {
   yMax = Math.ceil((yMax + extraSpace) * 1000) / 1000;
 
   return {
-    responsive: true,
-    maintainAspectRatio: false,
+    responsive: true,  // 響應式圖表
+    maintainAspectRatio: false,  // 不保持寬高比，允許自定義高度
     interaction: {
-      mode: 'index',
-      intersect: false,
+      mode: 'index',  // 同一時間點的所有數據
+      intersect: false,  // 不需要直接指向數據點
     },
     plugins: {
       legend: {
-        position: 'top',
+        position: 'top',  // 圖例位置：'top', 'bottom', 'left', 'right'
+        // labels: {  // 圖例標籤樣式
+        //   padding: 20,  // 圖例間距
+        //   font: { size: 13 },  // 圖例字體大小
+        //   usePointStyle: true,  // 使用點狀圖例
+        //   pointStyle: 'circle'  // 圖例形狀：'circle', 'rect', 'line'
+        // }
       },
       title: {
         display: true,
         text: '資金費率歷史走勢'
+        // font: {  // 標題字體
+        //   size: 16,  // 字體大小
+        //   weight: 'bold'  // 字體粗細
+        // },
+        // padding: {  // 標題內邊距
+        //   top: 10,
+        //   bottom: 20
+        // }
       },
       tooltip: {
         callbacks: {
@@ -93,26 +107,46 @@ const getChartOptions = (data) => {
     },
     scales: {
       y: {
-        min: yMin,
-        max: yMax,
+        min: yMin,  // Y軸最小值
+        max: yMax,  // Y軸最大值
         ticks: {
-          callback: value => value.toFixed(4) + '%',
-          stepSize,
-          maxTicksLimit: 10  // 限制刻度數量
+          callback: value => value.toFixed(4) + '%',  // Y軸標籤格式
+          stepSize,  // 刻度間隔
+          maxTicksLimit: 10,  // 最大刻度數量
+          // font: { size: 12 },  // 刻度字體大小
+          // padding: 8  // 刻度內邊距
         },
         grid: {
-          color: 'rgba(0, 0, 0, 0.1)'
+          // color: 'rgba(0, 0, 0, 0.05)',  // 網格線顏色
+          // drawBorder: false  // 是否繪製邊框
+          color: 'rgba(0, 0, 0, 0.1)'  // 當前網格線顏色
         }
+        // border: {  // 軸線樣式
+        //   display: true,
+        //   color: 'rgba(0, 0, 0, 0.1)'
+        // }
       },
       x: {
         grid: {
-          display: false
+          display: false  // 不顯示X軸網格線
         },
         ticks: {
-          maxRotation: 0,
-          autoSkip: true,
-          maxTicksLimit: 12
+          maxRotation: 0,  // 標籤不旋轉
+          autoSkip: true,  // 自動跳過重疊的標籤
+          maxTicksLimit: 12  // 最大標籤數量
+          // font: { size: 12 },  // 標籤字體大小
+          // padding: 8  // 標籤內邊距
         }
+      }
+    },
+    elements: {  // 圖表元素樣式
+      line: {
+        tension: 0.4,  // 線條平滑度：0-1，0為直線
+        borderWidth: 2  // 線條寬度
+      },
+      point: {
+        radius: 3,  // 數據點大小
+        hoverRadius: 6  // 懸停時數據點大小
       }
     }
   };
@@ -134,6 +168,7 @@ export default function HistoryPage() {
   const router = useRouter();
   const { symbol } = router.query;
   const [historyData, setHistoryData] = useState(null);
+  const [currentRates, setCurrentRates] = useState(null);  // 添加當前費率狀態
   const [isLoading, setIsLoading] = useState(true);
   const [selectedExchange, setSelectedExchange] = useState('all');
   const [timeRange, setTimeRange] = useState('24h');
@@ -184,6 +219,155 @@ export default function HistoryPage() {
     fetchHistoryData();
   }, [symbol, selectedExchange]);
 
+  // 獲取當前費率
+  useEffect(() => {
+    if (!symbol) return;
+
+    const fetchCurrentRates = async () => {
+      try {
+        // 使用當前費率 API
+        const currentData = {
+          time: new Date().toISOString(),
+          rates: {}
+        };
+
+        // 初始化所有交易所數據位置
+        exchangeOrder.forEach(exchange => {
+          currentData.rates[exchange] = {
+            rate: null,
+            hourlyRates: null
+          };
+        });
+
+        // Bitget
+        try {
+          const bitgetRes = await fetch(
+            `https://api.bitget.com/api/v2/mix/market/current-fund-rate?` + 
+            `symbol=${symbol}USDT&productType=USDT-FUTURES`
+          );
+          const bitgetData = await bitgetRes.json();
+          
+          // 檢查 API 返回的完整結構
+          if (bitgetData.code === '00000' && 
+              bitgetData.data?.[0]?.symbol === `${symbol}USDT` && 
+              bitgetData.data[0].fundingRate) {
+            const rate = parseFloat(bitgetData.data[0].fundingRate);
+            if (!isNaN(rate)) {
+              currentData.rates.Bitget.rate = (rate * 100).toFixed(4);
+            } else {
+              console.debug('Bitget invalid rate value:', bitgetData.data[0].fundingRate);
+            }
+          } else {
+            console.debug('Bitget response structure:', {
+              code: bitgetData.code,
+              msg: bitgetData.msg,
+              data: bitgetData.data
+            });
+          }
+        } catch (error) {
+          console.error('Bitget current rate error:', error);
+        }
+
+        // Binance
+        try {
+          const binanceRes = await fetch(
+            `https://fapi.binance.com/fapi/v1/premiumIndex?symbol=${symbol}USDT`
+          );
+          const binanceData = await binanceRes.json();
+          if (binanceData.lastFundingRate) {
+            currentData.rates.Binance.rate = 
+              (parseFloat(binanceData.lastFundingRate) * 100).toFixed(4);
+          }
+        } catch (error) {
+          console.error('Binance current rate error:', error);
+        }
+
+        // Bybit
+        try {
+          const bybitRes = await fetch(
+            `https://api.bybit.com/v5/market/tickers?category=linear&symbol=${symbol}USDT`
+          );
+          const bybitData = await bybitRes.json();
+          if (bybitData.result?.list?.[0]) {
+            const data = bybitData.result.list[0];
+            // 確保資金費率存在且為有效數字
+            if (data.fundingRate && !isNaN(parseFloat(data.fundingRate))) {
+              currentData.rates.Bybit.rate = 
+                (parseFloat(data.fundingRate) * 100).toFixed(4);
+            }
+          }
+        } catch (error) {
+          console.error('Bybit current rate error:', error);
+        }
+
+        // OKX
+        try {
+          const okxRes = await fetch(
+            `https://www.okx.com/api/v5/public/funding-rate?instId=${symbol}-USDT-SWAP`
+          );
+          const okxData = await okxRes.json();
+          if (okxData.data?.[0]) {
+            const fundingRate = okxData.data[0].fundingRate;
+            if (fundingRate && !isNaN(parseFloat(fundingRate))) {
+              currentData.rates.OKX.rate = 
+                (parseFloat(fundingRate) * 100).toFixed(4);
+            }
+          }
+        } catch (error) {
+          console.error('OKX current rate error:', error);
+          // 只在真正出錯時才顯示調試信息
+          if (!currentData.rates.OKX.rate) {
+            console.debug('OKX Debug:', {
+              error: error.message,
+              data: okxData?.data?.[0]
+            });
+          }
+        }
+
+        // HyperLiquid
+        try {
+          const hyperRes = await fetch('https://api.hyperliquid.xyz/info', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'fundingRates',
+              coin: symbol
+            })
+          });
+          const hyperData = await hyperRes.json();
+          if (Array.isArray(hyperData) && hyperData.length > 0) {
+            currentData.rates.HyperLiquid = {
+              rate: (parseFloat(hyperData[0].fundingRate) * 100).toFixed(4),
+              hourlyRates: hyperData.map(item => ({
+                time: new Date(item.time).toLocaleString(),
+                rate: (parseFloat(item.fundingRate) * 100).toFixed(4)
+              }))
+            };
+          }
+        } catch (error) {
+          console.error('HyperLiquid current rate error:', error);
+        }
+
+        // 在設置 currentRates 之前進行數據驗證
+        Object.keys(currentData.rates).forEach(exchange => {
+          const rate = currentData.rates[exchange].rate;
+          if (rate === 'NaN' || rate === 'undefined' || rate === null) {
+            currentData.rates[exchange].rate = null;  // 將無效值設為 null
+          }
+        });
+
+        setCurrentRates(currentData);
+      } catch (error) {
+        console.error('Error fetching current rates:', error);
+      }
+    };
+
+    fetchCurrentRates();
+    // 每分鐘更新一次當前費率
+    const interval = setInterval(fetchCurrentRates, 60000);
+    return () => clearInterval(interval);
+  }, [symbol]);
+
   const getChartData = () => {
     if (!chartData) return null;
 
@@ -205,9 +389,11 @@ export default function HistoryPage() {
         data: labels.map(time => timeGroups[time][exchange] || null),
         borderColor: exchangeColors[exchange],
         backgroundColor: exchangeColors[exchange],
-        tension: 0.4,
-        pointRadius: 1,
-        borderWidth: 2,
+        tension: 0.4,  // 線條平滑度
+        pointRadius: 3,  // 數據點大小
+        pointHoverRadius: 6,  // 懸停時數據點大小
+        borderWidth: 2,  // 線條寬度
+        spanGaps: true,  // 連接空值之間的線條
         order: exchangeOrder.indexOf(exchange)
       }));
 
@@ -306,6 +492,36 @@ export default function HistoryPage() {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* 添加當前費率行 */}
+                  {currentRates && (
+                    <tr>
+                      <td>當前</td>
+                      {exchangeOrder.map(exchange => (
+                        <td 
+                          key={exchange}
+                          className={`${
+                            currentRates.rates[exchange]?.rate 
+                              ? parseFloat(currentRates.rates[exchange].rate) > 0 
+                                ? 'positive-rate' 
+                                : 'negative-rate'
+                              : ''
+                          }`}
+                          onMouseEnter={(e) => exchange === 'HyperLiquid' && 
+                            handleMouseEnter(e, currentRates.rates[exchange])}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          {currentRates.rates[exchange]?.rate 
+                            ? `${currentRates.rates[exchange].rate}%` 
+                            : '-'}
+                          {exchange === 'HyperLiquid' && 
+                           currentRates.rates[exchange]?.hourlyRates && (
+                            <span className="info-icon">ℹ</span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  )}
+                  {/* 歷史數據行 */}
                   {Object.entries(
                     historyData?.data.reduce((acc, item) => {
                       const timeKey = new Date(item.time).toLocaleString();
@@ -409,12 +625,13 @@ export default function HistoryPage() {
         }
 
         .chart-container {
-          height: 400px;
-          margin-bottom: 20px;
-          padding: 20px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background: white;
+          height: 400px;  // 圖表高度
+          margin-bottom: 20px;  // 下邊距
+          padding: 20px;  // 內邊距
+          border: 1px solid #ddd;  // 邊框樣式
+          border-radius: 4px;  // 圓角
+          background: white;  // 背景色
+          // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);  // 陰影效果
         }
 
         .data-table {
@@ -541,6 +758,14 @@ export default function HistoryPage() {
           border: 4px solid transparent;
           border-top-color: rgba(0, 0, 0, 0.9);
         }
+
+        // 移動端響應式
+        // @media (max-width: 768px) {
+        //   .chart-container {
+        //     height: 350px;  // 移動端圖表高度
+        //     padding: 15px;  // 移動端內邊距
+        //   }
+        // }
       `}</style>
     </div>
   );
