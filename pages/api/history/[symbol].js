@@ -337,12 +337,12 @@ export default async function handler(req, res) {
           return acc;
         }, {});
 
-        // 計算每個時間間隔的平均值並格式化數據
+        // 計算每個時間間隔的總和並格式化數據
         formattedData.HyperLiquid = Object.entries(groupedData)
           .map(([timeKey, group]) => ({
             exchange: 'HyperLiquid',
             time: group.time.toISOString(),
-            rate: ((group.sum / group.count) * 100).toFixed(4),
+            rate: (group.sum * 100).toFixed(4),  // 改為直接使用總和，不除以 count
             interval: minInterval,
             hourlyRates: group.hourlyRates
               .sort((a, b) => new Date(b.time) - new Date(a.time))

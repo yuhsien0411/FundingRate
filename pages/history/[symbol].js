@@ -24,8 +24,8 @@ ChartJS.register(
   Legend
 );
 
-// 定義圖表選項函數，接收數據作為參數
-const getChartOptions = (data) => {
+// 定義圖表選項函數，接收數據和主題作為參數
+const getChartOptions = (data, isDarkMode) => {
   // 計算數據的最大和最小值
   const values = data?.datasets?.flatMap(dataset => dataset.data.filter(v => v !== null)) || [];
   const maxValue = Math.max(...values, 0.01);
@@ -73,24 +73,14 @@ const getChartOptions = (data) => {
     plugins: {
       legend: {
         position: 'top',  // 圖例位置：'top', 'bottom', 'left', 'right'
-        // labels: {  // 圖例標籤樣式
-        //   padding: 20,  // 圖例間距
-        //   font: { size: 13 },  // 圖例字體大小
-        //   usePointStyle: true,  // 使用點狀圖例
-        //   pointStyle: 'circle'  // 圖例形狀：'circle', 'rect', 'line'
-        // }
+        labels: {
+          color: isDarkMode ? '#fff' : '#666'
+        }
       },
       title: {
         display: true,
-        text: '資金費率歷史走勢'
-        // font: {  // 標題字體
-        //   size: 16,  // 字體大小
-        //   weight: 'bold'  // 字體粗細
-        // },
-        // padding: {  // 標題內邊距
-        //   top: 10,
-        //   bottom: 20
-        // }
+        text: '資金費率歷史走勢',
+        color: isDarkMode ? '#fff' : '#333'
       },
       tooltip: {
         callbacks: {
@@ -102,7 +92,11 @@ const getChartOptions = (data) => {
         itemSort: function(a, b) {
           // 按數值大小降序排序
           return b.parsed.y - a.parsed.y;
-        }
+        },
+        backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+        titleColor: isDarkMode ? '#fff' : '#333',
+        bodyColor: isDarkMode ? '#fff' : '#333',
+        borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
       }
     },
     scales: {
@@ -113,18 +107,11 @@ const getChartOptions = (data) => {
           callback: value => value.toFixed(4) + '%',  // Y軸標籤格式
           stepSize,  // 刻度間隔
           maxTicksLimit: 10,  // 最大刻度數量
-          // font: { size: 12 },  // 刻度字體大小
-          // padding: 8  // 刻度內邊距
+          color: isDarkMode ? '#fff' : '#666'
         },
         grid: {
-          // color: 'rgba(0, 0, 0, 0.05)',  // 網格線顏色
-          // drawBorder: false  // 是否繪製邊框
-          color: 'rgba(0, 0, 0, 0.1)'  // 當前網格線顏色
+          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
         }
-        // border: {  // 軸線樣式
-        //   display: true,
-        //   color: 'rgba(0, 0, 0, 0.1)'
-        // }
       },
       x: {
         grid: {
@@ -133,9 +120,8 @@ const getChartOptions = (data) => {
         ticks: {
           maxRotation: 0,  // 標籤不旋轉
           autoSkip: true,  // 自動跳過重疊的標籤
-          maxTicksLimit: 12  // 最大標籤數量
-          // font: { size: 12 },  // 標籤字體大小
-          // padding: 8  // 標籤內邊距
+          maxTicksLimit: 12,  // 最大標籤數量
+          color: isDarkMode ? '#fff' : '#666'
         }
       }
     },
@@ -157,7 +143,7 @@ const exchangeColors = {
   Binance: '#F3BA2F',  // 黃色
   Bybit: '#4183FC',    // 藍色
   Bitget: '#00b067',   // 綠色
-  OKX: '#101F35',      // 深藍色
+  OKX: '#2FB8E7',      // OKX 品牌藍色
   HyperLiquid: '#FF0000'  // 紅色
 };
 
@@ -175,6 +161,7 @@ export default function HistoryPage() {
   const [chartData, setChartData] = useState(null);
   const [tooltipContent, setTooltipContent] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     if (!historyData?.data) return;
@@ -338,10 +325,34 @@ export default function HistoryPage() {
             const [metadata, assetContexts] = hyperData;
             const assetIndex = metadata.universe.findIndex(asset => asset.name === symbol);
             if (assetIndex !== -1 && assetContexts[assetIndex]) {
-              const currentRate = (parseFloat(assetContexts[assetIndex].funding) * 100).toFixed(4);
+              // 獲取當前小時的資金費率
+              const currentHourRes = await fetch('https://api.hyperliquid.xyz/info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  type: 'fundingHistory',
+                  coin: symbol,
+                  startTime: Math.floor(Date.now() - 3600000), // 一小時前
+                  endTime: Math.floor(Date.now())
+                })
+              });
+              
+              const currentHourData = await currentHourRes.json();
+              let totalRate = 0;
+              
+              if (Array.isArray(currentHourData)) {
+                // 計算當前小時內所有費率的總和
+                totalRate = currentHourData.reduce((sum, item) => {
+                  return sum + parseFloat(item.funding || 0);
+                }, 0);
+              }
+              
               currentData.rates.HyperLiquid = {
-                rate: currentRate,
-                hourlyRates: null  // 當前費率不需要小時數據
+                rate: (totalRate * 100).toFixed(4),
+                hourlyRates: currentHourData.map(item => ({
+                  time: new Date(item.time).toLocaleString(),
+                  rate: (parseFloat(item.funding) * 100).toFixed(4)
+                }))
               };
             }
           }
@@ -368,6 +379,12 @@ export default function HistoryPage() {
     const interval = setInterval(fetchCurrentRates, 60000);
     return () => clearInterval(interval);
   }, [symbol]);
+
+  // 初始化時檢查系統主題偏好
+  useEffect(() => {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDarkMode(prefersDark);
+  }, []);
 
   const getChartData = () => {
     if (!chartData) return null;
@@ -431,7 +448,7 @@ export default function HistoryPage() {
   if (!symbol) return null;
 
   return (
-    <div className="container">
+    <div className={`container ${isDarkMode ? 'dark' : ''}`}>
       <Head>
         <title>{symbol} - 資金費率歷史</title>
       </Head>
@@ -446,11 +463,11 @@ export default function HistoryPage() {
               className="select-control"
             >
               <option value="all">所有交易所</option>
+              <option value="HyperLiquid">HyperLiquid</option>
               <option value="Binance">Binance</option>
               <option value="Bybit">Bybit</option>
-              <option value="OKX">OKX</option>
               <option value="Bitget">Bitget</option>
-              <option value="HyperLiquid">HyperLiquid</option>
+              <option value="OKX">OKX</option>
             </select>
 
             <div className="time-range">
@@ -473,6 +490,13 @@ export default function HistoryPage() {
                 30D
               </button>
             </div>
+
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="theme-toggle"
+            >
+              {isDarkMode ? '☀️' : '🌙'}
+            </button>
           </div>
         </div>
         
@@ -483,7 +507,7 @@ export default function HistoryPage() {
             <div className="chart-container">
               {chartData && (
                 <Line 
-                  options={getChartOptions(getChartData())} 
+                  options={getChartOptions(getChartData(), isDarkMode)} 
                   data={getChartData()} 
                 />
               )}
@@ -610,7 +634,22 @@ export default function HistoryPage() {
         </div>
       )}
 
-      <style jsx>{`
+      <style jsx global>{`
+        :root {
+          --bg-primary: ${isDarkMode ? '#1a1a1a' : '#ffffff'};
+          --bg-secondary: ${isDarkMode ? '#2d2d2d' : '#f8f9fa'};
+          --text-primary: ${isDarkMode ? '#ffffff' : '#000000'};
+          --text-secondary: ${isDarkMode ? '#cccccc' : '#666666'};
+          --border-color: ${isDarkMode ? '#404040' : '#dddddd'};
+          --positive-rate: ${isDarkMode ? '#4caf50' : '#4caf50'};
+          --negative-rate: ${isDarkMode ? '#f44336' : '#f44336'};
+        }
+
+        body {
+          background-color: var(--bg-primary);
+          color: var(--text-primary);
+        }
+
         .container {
           padding: 20px;
           max-width: 1200px;
@@ -626,14 +665,25 @@ export default function HistoryPage() {
 
         .controls {
           display: flex;
-          gap: 16px;
+          gap: 8px;
           align-items: center;
+        }
+
+        .theme-toggle {
+          padding: 8px;
+          border-radius: 4px;
+          border: 1px solid var(--border-color);
+          background: var(--bg-secondary);
+          cursor: pointer;
+          font-size: 16px;
         }
 
         .select-control {
           padding: 8px;
           border-radius: 4px;
-          border: 1px solid #ddd;
+          border: 1px solid var(--border-color);
+          background: var(--bg-secondary);
+          color: var(--text-primary);
         }
 
         .time-range {
@@ -643,9 +693,10 @@ export default function HistoryPage() {
 
         .time-range button {
           padding: 8px 16px;
-          border: 1px solid #ddd;
+          border: 1px solid var(--border-color);
           border-radius: 4px;
-          background: white;
+          background: var(--bg-secondary);
+          color: var(--text-primary);
           cursor: pointer;
         }
 
@@ -668,10 +719,9 @@ export default function HistoryPage() {
           height: 400px;  // 圖表高度
           margin-bottom: 20px;  // 下邊距
           padding: 20px;  // 內邊距
-          border: 1px solid #ddd;  // 邊框樣式
+          border: 1px solid var(--border-color);  // 邊框樣式
           border-radius: 4px;  // 圓角
-          background: white;  // 背景色
-          // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);  // 陰影效果
+          background: var(--bg-secondary);  // 背景色
         }
 
         .data-table {
@@ -695,30 +745,27 @@ export default function HistoryPage() {
 
         th, td {
           padding: 12px;
-          border: 1px solid #ddd;
+          border: 1px solid var(--border-color);
           text-align: center;
           min-width: 100px;
         }
 
         th {
-          background: #f8f9fa;
-          position: sticky;
-          top: 0;
+          background: var(--bg-secondary);
+          color: var(--text-primary);
         }
 
         td:first-child {
-          position: sticky;
-          left: 0;
-          background: #f8f9fa;
-          z-index: 1;
+          background: var(--bg-secondary);
+          color: var(--text-primary);
         }
 
         .positive-rate {
-          color: #4caf50;
+          color: var(--positive-rate);
         }
 
         .negative-rate {
-          color: #f44336;
+          color: var(--negative-rate);
         }
 
         .has-tooltip {
@@ -769,14 +816,14 @@ export default function HistoryPage() {
           display: inline-block;
           margin-left: 4px;
           font-size: 0.8em;
-          color: #666;
+          color: var(--text-secondary);
         }
 
         .tooltip {
           position: fixed;
           transform: translate(-50%, -100%);
-          background: rgba(0, 0, 0, 0.9);
-          color: white;
+          background: ${isDarkMode ? 'rgba(45, 45, 45, 0.95)' : 'rgba(0, 0, 0, 0.9)'};
+          color: ${isDarkMode ? '#fff' : '#fff'};
           padding: 8px 12px;
           border-radius: 4px;
           font-size: 12px;
@@ -818,7 +865,7 @@ export default function HistoryPage() {
           display: inline-block;
           margin-left: 4px;
           font-size: 0.8em;
-          color: #666;
+          color: var(--text-secondary);
           cursor: help;
         }
 
