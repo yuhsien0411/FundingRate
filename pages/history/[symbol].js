@@ -150,6 +150,43 @@ const exchangeColors = {
 // 定義交易所順序
 const exchangeOrder = ['Binance', 'Bybit', 'Bitget', 'OKX', 'HyperLiquid'];
 
+// 修改計算累計費率函數
+const calculateCumulativeRates = (data, timeRange) => {
+  if (!data?.data) return null;
+
+  const now = new Date();
+  let filterTime;
+  switch (timeRange) {
+    case '24h':
+      filterTime = new Date(now - 24 * 60 * 60 * 1000);
+      break;
+    case '7d':
+      filterTime = new Date(now - 7 * 24 * 60 * 60 * 1000);
+      break;
+    case '30d':
+      filterTime = new Date(now - 30 * 24 * 60 * 60 * 1000);
+      break;
+  }
+
+  const cumulativeRates = {};
+  exchangeOrder.forEach(exchange => {
+    const filteredData = data.data
+      .filter(item => 
+        item.exchange === exchange && 
+        new Date(item.time) > filterTime &&
+        item.rate !== null &&
+        !item.isCurrent  // 排除當前費率
+      )
+      .map(item => parseFloat(item.rate));
+
+    cumulativeRates[exchange] = filteredData.length > 0
+      ? filteredData.reduce((sum, rate) => sum + rate, 0).toFixed(4)
+      : null;
+  });
+
+  return cumulativeRates;
+};
+
 export default function HistoryPage() {
   const router = useRouter();
   const { symbol } = router.query;
@@ -525,7 +562,29 @@ export default function HistoryPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* 添加當前費率行 */}
+                  {/* 添加累計費率行 */}
+                  <tr className="cumulative-row">
+                    <td>累計 ({timeRange})</td>
+                    {exchangeOrder.map(exchange => {
+                      const cumulativeRates = calculateCumulativeRates(historyData, timeRange);
+                      const rate = cumulativeRates?.[exchange];
+                      return (
+                        <td 
+                          key={exchange}
+                          className={`${
+                            rate 
+                              ? parseFloat(rate) > 0 
+                                ? 'positive-rate' 
+                                : 'negative-rate'
+                              : ''
+                          }`}
+                        >
+                          {rate ? `${rate}%` : '-'}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                  {/* 當前費率行 */}
                   {currentRates && (
                     <tr>
                       <td>當前</td>
@@ -867,6 +926,15 @@ export default function HistoryPage() {
           font-size: 0.8em;
           color: var(--text-secondary);
           cursor: help;
+        }
+
+        .cumulative-row {
+          background-color: ${isDarkMode ? '#2d2d2d' : '#f8f9fa'};
+          font-weight: bold;
+        }
+        
+        .cumulative-row td:first-child {
+          font-weight: bold;
         }
 
         // 移動端響應式
