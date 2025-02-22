@@ -23,6 +23,7 @@ export default function Home() {
     { id: 'OKX', order: 4 },
     { id: 'HyperLiquid', order: 5 }
   ];
+  const [searchTerm, setSearchTerm] = useState('');  // 新增搜尋狀態
 
   // 初始化主題設置
   useEffect(() => {
@@ -195,6 +196,25 @@ export default function Home() {
     setExchanges(sortedExchanges);
   }, [selectedExchanges]);
 
+  // 新增搜尋過濾函數
+  const filterData = (data) => {
+    if (!searchTerm) return data;
+    
+    const searchLower = searchTerm.toLowerCase();
+    return data.filter(item => {
+      // 搜尋幣種名稱
+      if (item.symbol.toLowerCase().includes(searchLower)) return true;
+      
+      // 搜尋費率值
+      for (const exchange of exchanges) {
+        const rate = item.rates[exchange]?.rate;
+        if (rate && rate.toString().includes(searchLower)) return true;
+      }
+      
+      return false;
+    });
+  };
+
   // 等待客戶端渲染
   if (!mounted) return null;
 
@@ -210,46 +230,57 @@ export default function Home() {
           <div className="title-container">
             <h1>永續合約資金費率比較</h1>
           </div>
-          <div className="controls">
-            <div className="exchange-dropdown">
-              <button className="dropdown-button">
-                交易所選擇 ({selectedExchanges.size})
-              </button>
-              <div className="dropdown-content">
-                {allExchanges.map(exchange => (
-                  <label key={exchange.id} className="exchange-option">
-                    <input
-                      type="checkbox"
-                      checked={selectedExchanges.has(exchange.id)}
-                      onChange={() => handleExchangeToggle(exchange.id)}
-                      disabled={selectedExchanges.size === 1 && selectedExchanges.has(exchange.id)}
-                    />
-                    {exchange.id}
-                  </label>
-                ))}
-              </div>
+          <div className="controls-container">
+            <div className="search-container">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="搜尋幣種或費率..."
+                className="search-input"
+              />
             </div>
-            <button 
-              onClick={() => setShowInterval(!showInterval)}
-              className={`display-toggle ${showInterval ? 'active' : ''}`}
-              title={showInterval ? "切換為星號顯示" : "切換為小時顯示"}
-            >
-              {showInterval ? "星號" : "小時"}
-            </button>
-            <button 
-              onClick={() => setShowNormalized(!showNormalized)}
-              className={`display-toggle ${showNormalized ? 'active' : ''}`}
-              title={showNormalized ? "顯示當前費率" : "顯示8小時費率"}
-            >
-              {showNormalized ? "當前" : "8 H"}
-            </button>
-            <button 
-              onClick={toggleTheme}
-              className="theme-toggle"
-              title={isDarkMode ? "切換至淺色模式" : "切換至深色模式"}
-            >
-              {isDarkMode ? '🌞' : '🌙'}
-            </button>
+            <div className="controls">
+              <div className="exchange-dropdown">
+                <button className="dropdown-button">
+                  交易所選擇 ({selectedExchanges.size})
+                </button>
+                <div className="dropdown-content">
+                  {allExchanges.map(exchange => (
+                    <label key={exchange.id} className="exchange-option">
+                      <input
+                        type="checkbox"
+                        checked={selectedExchanges.has(exchange.id)}
+                        onChange={() => handleExchangeToggle(exchange.id)}
+                        disabled={selectedExchanges.size === 1 && selectedExchanges.has(exchange.id)}
+                      />
+                      {exchange.id}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowInterval(!showInterval)}
+                className={`display-toggle ${showInterval ? 'active' : ''}`}
+                title={showInterval ? "切換為星號顯示" : "切換為小時顯示"}
+              >
+                {showInterval ? "星號" : "小時"}
+              </button>
+              <button 
+                onClick={() => setShowNormalized(!showNormalized)}
+                className={`display-toggle ${showNormalized ? 'active' : ''}`}
+                title={showNormalized ? "顯示當前費率" : "顯示8小時費率"}
+              >
+                {showNormalized ? "當前" : "8 H"}
+              </button>
+              <button 
+                onClick={toggleTheme}
+                className="theme-toggle"
+                title={isDarkMode ? "切換至淺色模式" : "切換至深色模式"}
+              >
+                {isDarkMode ? '🌞' : '🌛'}
+              </button>
+            </div>
           </div>
         </div>
         
@@ -288,23 +319,26 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {sortedSymbols.map(symbol => (
-                    <tr key={symbol}>
+                  {filterData(sortedSymbols.map(symbol => ({
+                    symbol,
+                    rates: groupedRates[symbol]
+                  }))).map((item) => (
+                    <tr key={item.symbol}>
                       <td>
                         <a
-                          href={`/history/${symbol}`}
+                          href={`/history/${item.symbol}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="symbol-link"
                         >
-                          {symbol}
+                          {item.symbol}
                         </a>
                       </td>
                       {exchanges.map(exchange => {
-                        const data = groupedRates[symbol][exchange];
+                        const data = item.rates[exchange];
                         return (
                           <td 
-                            key={`${symbol}-${exchange}`}
+                            key={`${item.symbol}-${exchange}`}
                             className={data && parseFloat(data.currentRate) > 0 ? 'positive-rate' : 'negative-rate'}
                             style={{ textAlign: 'center' }}
                           >
@@ -368,23 +402,113 @@ export default function Home() {
 
         .header-container {
           display: flex;
-          justify-content: center;
+          flex-direction: column;
           align-items: center;
+          gap: 20px;
           margin-bottom: 20px;
-          position: relative;
+          width: 100%;
         }
 
         .title-container {
           text-align: center;
-          flex-grow: 1;
+        }
+
+        .controls-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 15px;
+          width: 100%;
+        }
+
+        .search-container {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 10px 15px;
+          border: 2px solid var(--table-border);
+          border-radius: 6px;
+          background: var(--bg-color);
+          color: var(--text-color);
+          font-size: 16px;
+          outline: none;
+          transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .search-input::placeholder {
+          color: var(--text-color);
+          opacity: 0.6;
         }
 
         .controls {
           display: flex;
           gap: 10px;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+        }
+
+        .exchange-dropdown {
+          position: relative;
+          display: inline-block;
+        }
+
+        .dropdown-button {
+          padding: 5px 10px;
+          border: 1px solid var(--table-border);
+          border-radius: 4px;
+          background: var(--bg-color);
+          color: var(--text-color);
+          cursor: pointer;
+          min-width: 120px;
+        }
+
+        .dropdown-content {
+          display: none;
           position: absolute;
           right: 0;
+          background-color: var(--bg-color);
+          min-width: 160px;
+          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+          padding: 8px;
+          border-radius: 4px;
+          border: 1px solid var(--table-border);
+          z-index: 1;
+        }
+
+        .exchange-dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        .exchange-option {
+          display: flex;
           align-items: center;
+          gap: 8px;
+          padding: 4px 8px;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+
+        .exchange-option:hover {
+          background-color: var(--hover-bg);
+        }
+
+        .exchange-option input {
+          cursor: pointer;
+        }
+
+        .exchange-option input:disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
         }
 
         .display-toggle {
@@ -605,6 +729,44 @@ export default function Home() {
         .symbol-link:hover {
           opacity: 0.7;
           text-decoration: underline;
+        }
+
+        /* 移動端適配 */
+        @media (max-width: 768px) {
+          .header-container {
+            padding: 0 10px;
+          }
+
+          .controls-container {
+            gap: 10px;
+          }
+
+          .controls {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .search-input {
+            font-size: 14px;
+            padding: 8px 12px;
+          }
+
+          .display-toggle,
+          .dropdown-button {
+            padding: 6px 10px;
+            font-size: 13px;
+          }
+        }
+
+        /* 深色模式適配 */
+        .dark-mode .search-input {
+          background: var(--bg-color);
+          border-color: var(--table-border);
+        }
+
+        .dark-mode .search-input:focus {
+          border-color: #007bff;
+          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
         }
       `}</style>
     </div>

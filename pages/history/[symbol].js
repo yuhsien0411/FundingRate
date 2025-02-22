@@ -613,10 +613,9 @@ export default function HistoryPage() {
                       ))}
                     </tr>
                   )}
-                  {/* 歷史數據行 */}
+                  {/* 修改歷史數據行 */}
                   {Object.entries(
                     historyData?.data.reduce((acc, item) => {
-                      // 跳過 API 返回的當前數據
                       if (item.isCurrent) return acc;
                       
                       const timeKey = new Date(item.time).toLocaleString();
@@ -936,14 +935,6 @@ export default function HistoryPage() {
         .cumulative-row td:first-child {
           font-weight: bold;
         }
-
-        // 移動端響應式
-        // @media (max-width: 768px) {
-        //   .chart-container {
-        //     height: 350px;  // 移動端圖表高度
-        //     padding: 15px;  // 移動端內邊距
-        //   }
-        // }
       `}</style>
     </div>
   );
