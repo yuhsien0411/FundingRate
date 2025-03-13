@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -494,6 +495,9 @@ export default function HistoryPage() {
         <div className="header">
           <h1>{symbol} 資金費率歷史</h1>
           <div className="controls">
+            <Link href="/" className="back-home-button">
+              回主頁
+            </Link>
             <select 
               value={selectedExchange} 
               onChange={(e) => setSelectedExchange(e.target.value)}
@@ -698,9 +702,9 @@ export default function HistoryPage() {
           --bg-secondary: ${isDarkMode ? '#2d2d2d' : '#f8f9fa'};
           --text-primary: ${isDarkMode ? '#ffffff' : '#000000'};
           --text-secondary: ${isDarkMode ? '#cccccc' : '#666666'};
-          --border-color: ${isDarkMode ? '#404040' : '#dddddd'};
-          --positive-rate: ${isDarkMode ? '#4caf50' : '#4caf50'};
-          --negative-rate: ${isDarkMode ? '#f44336' : '#f44336'};
+          --border-color: ${isDarkMode ? '#444444' : '#dddddd'};
+          --positive-color: ${isDarkMode ? '#4caf50' : '#4caf50'};
+          --negative-color: ${isDarkMode ? '#f44336' : '#f44336'};
         }
 
         body {
@@ -819,11 +823,11 @@ export default function HistoryPage() {
         }
 
         .positive-rate {
-          color: var(--positive-rate);
+          color: var(--positive-color);
         }
 
         .negative-rate {
-          color: var(--negative-rate);
+          color: var(--negative-color);
         }
 
         .has-tooltip {
@@ -934,6 +938,22 @@ export default function HistoryPage() {
         
         .cumulative-row td:first-child {
           font-weight: bold;
+        }
+
+        .back-home-button {
+          display: inline-block;
+          padding: 8px 16px;
+          background-color: ${isDarkMode ? '#333' : '#e9e9e9'};
+          color: ${isDarkMode ? '#fff' : '#333'};
+          border-radius: 4px;
+          font-size: 14px;
+          text-decoration: none;
+          transition: background-color 0.2s;
+          margin-right: 10px;
+        }
+        
+        .back-home-button:hover {
+          background-color: ${isDarkMode ? '#444' : '#d9d9d9'};
         }
       `}</style>
     </div>
