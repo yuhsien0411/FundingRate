@@ -1,9 +1,8 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import {
-  Chart as ChartJS,
+  Chart,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -15,7 +14,7 @@ import {
 import { Line } from 'react-chartjs-2';
 
 // 註冊 Chart.js 組件
-ChartJS.register(
+Chart.register(
   CategoryScale,
   LinearScale,
   PointElement,
@@ -40,18 +39,18 @@ const getChartOptions = (data, isDarkMode) => {
   const adjustedHalfRange = halfRange * 1.2; // 增加 20% 邊距
   
   // 計算最終範圍（圍繞中心點對稱）
-  let yMin = Math.floor((center - adjustedHalfRange) * 1000) / 1000;
-  let yMax = Math.ceil((center + adjustedHalfRange) * 1000) / 1000;
+  let yMin = Math.floor((center - adjustedHalfRange) * 10000) / 10000;
+  let yMax = Math.ceil((center + adjustedHalfRange) * 10000) / 10000;
   
   // 計算合適的步進值
   const totalRange = yMax - yMin;
   const getStepSize = (range) => {
-    if (range <= 0.1) return 0.02;
-    if (range <= 0.2) return 0.04;
-    if (range <= 0.5) return 0.1;
-    if (range <= 1) return 0.2;
-    if (range <= 2) return 0.4;
-    return 0.5;
+    if (range <= 0.0001) return 0.00002;
+    if (range <= 0.0002) return 0.00004;
+    if (range <= 0.0005) return 0.0001;
+    if (range <= 0.001) return 0.0002;
+    if (range <= 0.002) return 0.0004;
+    return 0.0005;
   };
   
   const stepSize = getStepSize(totalRange);
@@ -61,79 +60,116 @@ const getChartOptions = (data, isDarkMode) => {
   const adjustedRange = steps * stepSize;
   const extraSpace = (adjustedRange - totalRange) / 2;
   
-  yMin = Math.floor((yMin - extraSpace) * 1000) / 1000;
-  yMax = Math.ceil((yMax + extraSpace) * 1000) / 1000;
+  yMin = Math.floor((yMin - extraSpace) * 10000) / 10000;
+  yMax = Math.ceil((yMax + extraSpace) * 10000) / 10000;
 
   return {
-    responsive: true,  // 響應式圖表
-    maintainAspectRatio: false,  // 不保持寬高比，允許自定義高度
+    responsive: true,
+    maintainAspectRatio: false,
     interaction: {
-      mode: 'index',  // 同一時間點的所有數據
-      intersect: false,  // 不需要直接指向數據點
+      mode: 'index',
+      intersect: false,
     },
     plugins: {
       legend: {
-        position: 'top',  // 圖例位置：'top', 'bottom', 'left', 'right'
+        position: 'top',
         labels: {
-          color: isDarkMode ? '#fff' : '#666'
+          color: isDarkMode ? '#fff' : '#666',
+          padding: 20,
+          font: {
+            size: 12
+          }
         }
       },
       title: {
         display: true,
         text: '資金費率歷史走勢',
-        color: isDarkMode ? '#fff' : '#333'
+        color: isDarkMode ? '#fff' : '#333',
+        font: {
+          size: 16,
+          weight: 'bold'
+        },
+        padding: {
+          top: 20,
+          bottom: 20
+        }
       },
       tooltip: {
         callbacks: {
-          // 自定義 tooltip 內容
           label: function(context) {
-            return `${context.dataset.label}: ${context.parsed.y.toFixed(4)}%`;
+            return `${context.dataset.label}: ${(context.parsed.y * 100).toFixed(4)}%`;
           }
         },
         itemSort: function(a, b) {
-          // 按數值大小降序排序
           return b.parsed.y - a.parsed.y;
         },
-        backgroundColor: isDarkMode ? 'rgba(0, 0, 0, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: isDarkMode ? 'rgba(45, 45, 45, 0.95)' : 'rgba(255, 255, 255, 0.95)',
         titleColor: isDarkMode ? '#fff' : '#333',
         bodyColor: isDarkMode ? '#fff' : '#333',
-        borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+        borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        padding: 10,
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
       }
     },
     scales: {
       y: {
-        min: yMin,  // Y軸最小值
-        max: yMax,  // Y軸最大值
+        min: yMin,
+        max: yMax,
         ticks: {
-          callback: value => value.toFixed(4) + '%',  // Y軸標籤格式
-          stepSize,  // 刻度間隔
-          maxTicksLimit: 10,  // 最大刻度數量
-          color: isDarkMode ? '#fff' : '#666'
+          callback: value => (value * 100).toFixed(4) + '%',
+          stepSize,
+          maxTicksLimit: 10,
+          color: isDarkMode ? '#fff' : '#666',
+          font: {
+            size: 11
+          }
         },
         grid: {
-          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+          drawBorder: false
+        },
+        border: {
+          display: true,
+          color: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)'
         }
       },
       x: {
         grid: {
-          display: false  // 不顯示X軸網格線
+          display: false,
+          drawBorder: false
         },
         ticks: {
-          maxRotation: 0,  // 標籤不旋轉
-          autoSkip: true,  // 自動跳過重疊的標籤
-          maxTicksLimit: 12,  // 最大標籤數量
-          color: isDarkMode ? '#fff' : '#666'
+          maxRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 12,
+          color: isDarkMode ? '#fff' : '#666',
+          font: {
+            size: 11
+          }
+        },
+        border: {
+          display: true,
+          color: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)'
         }
       }
     },
-    elements: {  // 圖表元素樣式
+    elements: {
       line: {
-        tension: 0.4,  // 線條平滑度：0-1，0為直線
-        borderWidth: 2  // 線條寬度
+        tension: 0.4,
+        borderWidth: 2
       },
       point: {
-        radius: 3,  // 數據點大小
-        hoverRadius: 6  // 懸停時數據點大小
+        radius: 2,
+        hoverRadius: 4,
+        hitRadius: 6
+      }
+    },
+    layout: {
+      padding: {
+        top: 10,
+        right: 20,
+        bottom: 10,
+        left: 10
       }
     }
   };
@@ -192,7 +228,7 @@ export default function HistoryPage() {
   const router = useRouter();
   const { symbol } = router.query;
   const [historyData, setHistoryData] = useState(null);
-  const [currentRates, setCurrentRates] = useState(null);  // 添加當前費率狀態
+  const [currentRates, setCurrentRates] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedExchange, setSelectedExchange] = useState('all');
   const [timeRange, setTimeRange] = useState('24h');
@@ -200,6 +236,23 @@ export default function HistoryPage() {
   const [tooltipContent, setTooltipContent] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // 檢測螢幕尺寸
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // 初始檢測
+    checkIsMobile();
+    
+    // 監聽螢幕尺寸變化
+    window.addEventListener('resize', checkIsMobile);
+    
+    // 清理事件監聽器
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   useEffect(() => {
     if (!historyData?.data) return;
@@ -418,11 +471,42 @@ export default function HistoryPage() {
     return () => clearInterval(interval);
   }, [symbol]);
 
+  // 更新 Chart.js 全局配置
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (isDarkMode) {
+        Chart.defaults.color = '#ffffff';
+        Chart.defaults.backgroundColor = '#2d2d2d';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+      } else {
+        Chart.defaults.color = '#666666';
+        Chart.defaults.backgroundColor = '#ffffff';
+        Chart.defaults.borderColor = 'rgba(0, 0, 0, 0.1)';
+      }
+    }
+  }, [isDarkMode]);
+
   // 初始化時檢查系統主題偏好
   useEffect(() => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     setIsDarkMode(prefersDark);
+    
+    // 設置 body 的 class 以便應用深色模式
+    if (prefersDark) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
   }, []);
+  
+  // 處理深色模式切換
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   const getChartData = () => {
     if (!chartData) return null;
@@ -434,8 +518,8 @@ export default function HistoryPage() {
       if (!timeGroups[timeKey]) {
         timeGroups[timeKey] = {};
       }
-      // 確保將資金費率為 0 的數據點也包含進來
-      timeGroups[timeKey][item.exchange] = item.rate;
+      // 將資金費率轉換為小數形式
+      timeGroups[timeKey][item.exchange] = parseFloat(item.rate) / 100;
     });
 
     const labels = Object.keys(timeGroups).reverse();
@@ -445,14 +529,13 @@ export default function HistoryPage() {
         label: exchange,
         data: labels.map(time => {
           const value = timeGroups[time][exchange];
-          // 如果值存在（包括 0），則返回該值，否則返回 null
           return value !== undefined ? value : null;
         }),
         borderColor: exchangeColors[exchange],
         backgroundColor: exchangeColors[exchange],
         tension: 0.4,
-        pointRadius: 3,
-        pointHoverRadius: 6,
+        pointRadius: 2,
+        pointHoverRadius: 4,
         borderWidth: 2,
         spanGaps: true,
         order: exchangeOrder.indexOf(exchange)
@@ -483,21 +566,37 @@ export default function HistoryPage() {
     setTooltipContent(null);
   };
 
+  // 更新圖表配置以適應移動設備
+  const getResponsiveChartOptions = (data, isDarkMode) => {
+    const options = getChartOptions(data, isDarkMode);
+    
+    if (isMobile) {
+      // 調整移動端的圖表配置
+      options.plugins.legend.labels.padding = 10;
+      options.plugins.legend.labels.boxWidth = 12;
+      options.plugins.legend.labels.font.size = 10;
+      options.plugins.title.font.size = 14;
+      options.scales.x.ticks.maxTicksLimit = 6;
+      options.scales.y.ticks.font.size = 9;
+      options.scales.x.ticks.font.size = 9;
+    }
+    
+    return options;
+  };
+
   if (!symbol) return null;
 
   return (
     <div className={`container ${isDarkMode ? 'dark' : ''}`}>
       <Head>
         <title>{symbol} - 資金費率歷史</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
       </Head>
 
       <main>
         <div className="header">
           <h1>{symbol} 資金費率歷史</h1>
           <div className="controls">
-            <Link href="/" className="back-home-button">
-              回主頁
-            </Link>
             <select 
               value={selectedExchange} 
               onChange={(e) => setSelectedExchange(e.target.value)}
@@ -545,15 +644,16 @@ export default function HistoryPage() {
           <div className="loading">載入中...</div>
         ) : (
           <div className="history-content">
-            <div className="chart-container">
+            <div className="chart-container" style={{ background: isDarkMode ? '#2d2d2d' : '#ffffff' }}>
               {chartData && (
                 <Line 
-                  options={getChartOptions(getChartData(), isDarkMode)} 
+                  options={getResponsiveChartOptions(getChartData(), isDarkMode)} 
                   data={getChartData()} 
                 />
               )}
             </div>
             <div className="data-table">
+              {isMobile && <div className="swipe-indicator">👉</div>}
               <table>
                 <thead>
                   <tr>
@@ -660,23 +760,8 @@ export default function HistoryPage() {
         <div 
           className="tooltip"
           style={{
-            position: 'fixed',
             left: `${tooltipPosition.x}px`,
-            top: `${tooltipPosition.y}px`,
-            transform: 'translate(-50%, -100%)',
-            zIndex: 10000,
-            background: 'rgba(0, 0, 0, 0.9)',
-            color: 'white',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontSize: '12px',
-            lineHeight: 1.4,
-            whiteSpace: 'pre',
-            pointerEvents: 'none',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-            maxWidth: '300px',
-            maxHeight: '200px',
-            overflowY: 'auto'
+            top: `${tooltipPosition.y}px`
           }}
         >
           {tooltipContent}
@@ -690,272 +775,11 @@ export default function HistoryPage() {
               height: 0,
               borderLeft: '6px solid transparent',
               borderRight: '6px solid transparent',
-              borderTop: '6px solid rgba(0, 0, 0, 0.9)'
+              borderTop: '6px solid var(--bg-secondary)'
             }}
           />
         </div>
       )}
-
-      <style jsx global>{`
-        :root {
-          --bg-primary: ${isDarkMode ? '#1a1a1a' : '#ffffff'};
-          --bg-secondary: ${isDarkMode ? '#2d2d2d' : '#f8f9fa'};
-          --text-primary: ${isDarkMode ? '#ffffff' : '#000000'};
-          --text-secondary: ${isDarkMode ? '#cccccc' : '#666666'};
-          --border-color: ${isDarkMode ? '#444444' : '#dddddd'};
-          --positive-color: ${isDarkMode ? '#4caf50' : '#4caf50'};
-          --negative-color: ${isDarkMode ? '#f44336' : '#f44336'};
-        }
-
-        body {
-          background-color: var(--bg-primary);
-          color: var(--text-primary);
-        }
-
-        .container {
-          padding: 20px;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-
-        .header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 20px;
-        }
-
-        .controls {
-          display: flex;
-          gap: 8px;
-          align-items: center;
-        }
-
-        .theme-toggle {
-          padding: 8px;
-          border-radius: 4px;
-          border: 1px solid var(--border-color);
-          background: var(--bg-secondary);
-          cursor: pointer;
-          font-size: 16px;
-        }
-
-        .select-control {
-          padding: 8px;
-          border-radius: 4px;
-          border: 1px solid var(--border-color);
-          background: var(--bg-secondary);
-          color: var(--text-primary);
-        }
-
-        .time-range {
-          display: flex;
-          gap: 8px;
-        }
-
-        .time-range button {
-          padding: 8px 16px;
-          border: 1px solid var(--border-color);
-          border-radius: 4px;
-          background: var(--bg-secondary);
-          color: var(--text-primary);
-          cursor: pointer;
-        }
-
-        .time-range button.active {
-          background: #007bff;
-          color: white;
-          border-color: #007bff;
-        }
-
-        .loading {
-          text-align: center;
-          padding: 20px;
-        }
-
-        .history-content {
-          margin-top: 20px;
-        }
-
-        .chart-container {
-          height: 400px;  // 圖表高度
-          margin-bottom: 20px;  // 下邊距
-          padding: 20px;  // 內邊距
-          border: 1px solid var(--border-color);  // 邊框樣式
-          border-radius: 4px;  // 圓角
-          background: var(--bg-secondary);  // 背景色
-        }
-
-        .data-table {
-          position: relative;
-          overflow-x: auto;
-          margin-top: 20px;
-        }
-
-        /* 添加容器來處理溢出 */
-        .tooltip-container {
-          position: fixed;
-          pointer-events: none;
-          z-index: 10000;
-        }
-
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          white-space: nowrap;
-        }
-
-        th, td {
-          padding: 12px;
-          border: 1px solid var(--border-color);
-          text-align: center;
-          min-width: 100px;
-        }
-
-        th {
-          background: var(--bg-secondary);
-          color: var(--text-primary);
-        }
-
-        td:first-child {
-          background: var(--bg-secondary);
-          color: var(--text-primary);
-        }
-
-        .positive-rate {
-          color: var(--positive-color);
-        }
-
-        .negative-rate {
-          color: var(--negative-color);
-        }
-
-        .has-tooltip {
-          position: relative;
-          cursor: help;
-        }
-
-        .has-tooltip:hover:before {
-          content: attr(data-tooltip);
-          position: fixed;  /* 改為 fixed 定位 */
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -150%);
-          background: rgba(0, 0, 0, 0.9);
-          color: white;
-          padding: 8px;
-          border-radius: 4px;
-          white-space: pre;
-          z-index: 10000;  /* 提高 z-index */
-          min-width: 200px;
-          max-width: 400px;
-          font-size: 12px;
-          line-height: 1.4;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-          pointer-events: none;
-          text-align: left;
-        }
-
-        .has-tooltip:hover:after {
-          content: '';
-          position: fixed;  /* 改為 fixed 定位 */
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          border: 8px solid transparent;
-          border-top-color: rgba(0, 0, 0, 0.9);
-          pointer-events: none;
-          z-index: 10000;  /* 提高 z-index */
-          margin-top: 20px;
-        }
-
-        /* 確保表格的 sticky 元素不會覆蓋提示框 */
-        th, td:first-child {
-          z-index: 2;
-        }
-
-        .info-icon {
-          display: inline-block;
-          margin-left: 4px;
-          font-size: 0.8em;
-          color: var(--text-secondary);
-        }
-
-        .tooltip {
-          position: fixed;
-          transform: translate(-50%, -100%);
-          background: ${isDarkMode ? 'rgba(45, 45, 45, 0.95)' : 'rgba(0, 0, 0, 0.9)'};
-          color: ${isDarkMode ? '#fff' : '#fff'};
-          padding: 8px 12px;
-          border-radius: 4px;
-          font-size: 12px;
-          line-height: 1.4;
-          white-space: pre;
-          z-index: 10000;
-          pointer-events: none;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-          max-width: 300px;
-          max-height: 200px;
-          overflow-y: auto;
-          margin-top: -8px;
-        }
-
-        .tooltip::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        .tooltip::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 3px;
-        }
-
-        .tooltip::-webkit-scrollbar-thumb {
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 3px;
-        }
-
-        .hyperliquid-cell {
-          position: relative;
-          cursor: pointer;
-        }
-
-        .hyperliquid-cell:hover {
-          background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .info-icon {
-          display: inline-block;
-          margin-left: 4px;
-          font-size: 0.8em;
-          color: var(--text-secondary);
-          cursor: help;
-        }
-
-        .cumulative-row {
-          background-color: ${isDarkMode ? '#2d2d2d' : '#f8f9fa'};
-          font-weight: bold;
-        }
-        
-        .cumulative-row td:first-child {
-          font-weight: bold;
-        }
-
-        .back-home-button {
-          display: inline-block;
-          padding: 8px 16px;
-          background-color: ${isDarkMode ? '#333' : '#e9e9e9'};
-          color: ${isDarkMode ? '#fff' : '#333'};
-          border-radius: 4px;
-          font-size: 14px;
-          text-decoration: none;
-          transition: background-color 0.2s;
-          margin-right: 10px;
-        }
-        
-        .back-home-button:hover {
-          background-color: ${isDarkMode ? '#444' : '#d9d9d9'};
-        }
-      `}</style>
     </div>
   );
 } 

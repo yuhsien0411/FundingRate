@@ -63,7 +63,7 @@ async function fetchAllExchangeData() {
       { name: 'Binance Rates', url: 'https://fapi.binance.com/fapi/v1/premiumIndex' },
       { name: 'Binance Funding Info', url: 'https://fapi.binance.com/fapi/v1/fundingInfo' },
       { name: 'Bybit Rates', url: 'https://api.bybit.com/v5/market/tickers?category=linear' },
-      { name: 'Bybit Instruments', url: 'https://api.bybit.com/v5/market/instruments-info?category=linear' },
+      { name: 'Bybit Instruments', url: 'https://api.bybit.com/v5/market/instruments-info?category=linear&limit=1000' },
       { 
         name: 'Bitget Rates', 
         url: 'https://api.bitget.com/api/v2/mix/market/tickers?productType=USDT-FUTURES',

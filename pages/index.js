@@ -25,6 +25,27 @@ export default function Home() {
   ];
   const [searchTerm, setSearchTerm] = useState('');  // 新增搜尋狀態
 
+  // 添加移動設備檢測
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // 檢測螢幕尺寸
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    if (typeof window !== 'undefined') {
+      // 初始檢測
+      checkIsMobile();
+      
+      // 監聽螢幕尺寸變化
+      window.addEventListener('resize', checkIsMobile);
+      
+      // 清理事件監聽器
+      return () => window.removeEventListener('resize', checkIsMobile);
+    }
+  }, []);
+
   // 初始化主題設置
   useEffect(() => {
     setMounted(true);
@@ -223,6 +244,7 @@ export default function Home() {
       <Head>
         <title>永續合約資金費率比較</title>
         <meta name="description" content="永續合約資金費率比較" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
       </Head>
 
       <main>
@@ -243,7 +265,7 @@ export default function Home() {
             <div className="controls">
               <div className="exchange-dropdown">
                 <button className="dropdown-button">
-                  交易所選擇 ({selectedExchanges.size})
+                  {isMobile ? "交易所" : `交易所選擇 (${selectedExchanges.size})`}
                 </button>
                 <div className="dropdown-content">
                   {allExchanges.map(exchange => (
@@ -264,14 +286,14 @@ export default function Home() {
                 className={`display-toggle ${showInterval ? 'active' : ''}`}
                 title={showInterval ? "切換為星號顯示" : "切換為小時顯示"}
               >
-                {showInterval ? "星號" : "小時"}
+                {isMobile ? (showInterval ? "星" : "時") : (showInterval ? "星號" : "小時")}
               </button>
               <button 
                 onClick={() => setShowNormalized(!showNormalized)}
                 className={`display-toggle ${showNormalized ? 'active' : ''}`}
                 title={showNormalized ? "顯示當前費率" : "顯示8小時費率"}
               >
-                {showNormalized ? "當前" : "8 H"}
+                {isMobile ? (showNormalized ? "當" : "8H") : (showNormalized ? "當前" : "8 H")}
               </button>
               <button 
                 onClick={toggleTheme}
@@ -294,79 +316,82 @@ export default function Home() {
                   更新中...
                 </div>
               )}
-              <table className={isUpdating ? 'updating' : ''}>
-                <thead>
-                  <tr>
-                    <th onClick={() => handleSort('symbol')} className="sortable">
-                      幣種 {sortConfig.key === 'symbol' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
-                    </th>
-                    {exchanges.map(exchange => (
-                      <th 
-                        key={exchange} 
-                        onClick={() => handleExchangeSort(exchange)} 
-                        className="sortable"
-                      >
-                        {exchange}
-                        {hourlyExchanges.has(exchange) && (
-                          <span style={{ marginLeft: '4px', color: '#ffd700' }} title="每1小時結算">
-                            ★1h
-                          </span>
-                        )}
-                        {exchangeSort.exchange === exchange ? 
-                          (exchangeSort.direction === 'asc' ? '↑' : '↓') : ''}
+              <div className="data-table">
+                {isMobile && <div className="swipe-indicator">👉</div>}
+                <table className={isUpdating ? 'updating' : ''}>
+                  <thead>
+                    <tr>
+                      <th onClick={() => handleSort('symbol')} className="sortable">
+                        幣種 {sortConfig.key === 'symbol' ? (sortConfig.direction === 'asc' ? '↑' : '↓') : ''}
                       </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filterData(sortedSymbols.map(symbol => ({
-                    symbol,
-                    rates: groupedRates[symbol]
-                  }))).map((item) => (
-                    <tr key={item.symbol}>
-                      <td>
-                        <a
-                          href={`/history/${item.symbol}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="symbol-link"
+                      {exchanges.map(exchange => (
+                        <th 
+                          key={exchange} 
+                          onClick={() => handleExchangeSort(exchange)} 
+                          className="sortable"
                         >
-                          {item.symbol}
-                        </a>
-                      </td>
-                      {exchanges.map(exchange => {
-                        const data = item.rates[exchange];
-                        return (
-                          <td 
-                            key={`${item.symbol}-${exchange}`}
-                            className={data && parseFloat(data.currentRate) > 0 ? 'positive-rate' : 'negative-rate'}
-                            style={{ textAlign: 'center' }}
-                          >
-                            {data ? (
-                              <>
-                                {showNormalized && data.settlementInterval && data.settlementInterval !== 8 ? (
-                                  // 標準化為8小時費率
-                                  `${(parseFloat(data.currentRate) * (8 / data.settlementInterval)).toFixed(4)}%`
-                                ) : (
-                                  `${parseFloat(data.currentRate)}%`
-                                )}
-                                {data.isSpecialInterval && (
-                                  <span 
-                                    style={{ color: '#ffd700' }} 
-                                    title={`每${data.settlementInterval}小時結算${showNormalized ? ' (已轉換為8小時)' : ''}`}
-                                  >
-                                    {showInterval ? `${data.settlementInterval}H` : '*'}
-                                  </span>
-                                )}
-                              </>
-                            ) : '-'}
-                          </td>
-                        );
-                      })}
+                          {exchange}
+                          {hourlyExchanges.has(exchange) && (
+                            <span style={{ marginLeft: '4px', color: '#ffd700' }} title="每1小時結算">
+                              ★1h
+                            </span>
+                          )}
+                          {exchangeSort.exchange === exchange ? 
+                            (exchangeSort.direction === 'asc' ? '↑' : '↓') : ''}
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {filterData(sortedSymbols.map(symbol => ({
+                      symbol,
+                      rates: groupedRates[symbol]
+                    }))).map((item) => (
+                      <tr key={item.symbol}>
+                        <td>
+                          <a
+                            href={`/history/${item.symbol}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="symbol-link"
+                          >
+                            {item.symbol}
+                          </a>
+                        </td>
+                        {exchanges.map(exchange => {
+                          const data = item.rates[exchange];
+                          return (
+                            <td 
+                              key={`${item.symbol}-${exchange}`}
+                              className={data && parseFloat(data.currentRate) > 0 ? 'positive-rate' : 'negative-rate'}
+                              style={{ textAlign: 'center' }}
+                            >
+                              {data ? (
+                                <>
+                                  {showNormalized && data.settlementInterval && data.settlementInterval !== 8 ? (
+                                    // 標準化為8小時費率
+                                    `${(parseFloat(data.currentRate) * (8 / data.settlementInterval)).toFixed(4)}%`
+                                  ) : (
+                                    `${parseFloat(data.currentRate)}%`
+                                  )}
+                                  {data.isSpecialInterval && (
+                                    <span 
+                                      style={{ color: '#ffd700' }} 
+                                      title={`每${data.settlementInterval}小時結算${showNormalized ? ' (已轉換為8小時)' : ''}`}
+                                    >
+                                      {showInterval ? `${data.settlementInterval}H` : '*'}
+                                    </span>
+                                  )}
+                                </>
+                              ) : '-'}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </>
           )}
         </div>
@@ -731,42 +756,103 @@ export default function Home() {
           text-decoration: underline;
         }
 
-        /* 移動端適配 */
+        /* 改進移動端響應式佈局 */
         @media (max-width: 768px) {
           .header-container {
-            padding: 0 10px;
+            padding: 0;
+            gap: 10px;
+          }
+
+          h1 {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 10px 0;
           }
 
           .controls-container {
             gap: 10px;
           }
 
-          .controls {
-            width: 100%;
-            justify-content: space-between;
+          .search-container {
+            max-width: 100%;
           }
 
           .search-input {
             font-size: 14px;
-            padding: 8px 12px;
+            padding: 8px 10px;
           }
 
-          .display-toggle,
-          .dropdown-button {
-            padding: 6px 10px;
+          .controls {
+            width: 100%;
+            justify-content: space-between;
+            gap: 5px;
+          }
+
+          .dropdown-button, .display-toggle {
+            padding: 6px 8px;
+            font-size: 13px;
+            min-width: unset;
+          }
+
+          .theme-toggle {
+            padding: 4px;
+          }
+
+          table {
+            font-size: 14px;
+          }
+
+          th, td {
+            padding: 8px 4px;
+            min-width: 70px;
+          }
+
+          /* 固定首列，使其在水平滾動時保持可見 */
+          td:first-child, th:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 10;
+            background-color: var(--bg-color);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+          }
+
+          th:first-child {
+            z-index: 11;
+          }
+        }
+
+        /* 小螢幕手機適配 */
+        @media (max-width: 480px) {
+          .header-container {
+            padding: 0;
+          }
+
+          h1 {
+            font-size: 1.3rem;
+          }
+
+          .controls {
+            flex-wrap: wrap;
+          }
+
+          .search-input {
+            font-size: 13px;
+            padding: 6px 8px;
+          }
+
+          .dropdown-button, .display-toggle {
+            padding: 5px 6px;
+            font-size: 12px;
+          }
+
+          table {
             font-size: 13px;
           }
-        }
 
-        /* 深色模式適配 */
-        .dark-mode .search-input {
-          background: var(--bg-color);
-          border-color: var(--table-border);
-        }
-
-        .dark-mode .search-input:focus {
-          border-color: #007bff;
-          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+          th, td {
+            padding: 6px 3px;
+            min-width: 60px;
+          }
         }
       `}</style>
     </div>
