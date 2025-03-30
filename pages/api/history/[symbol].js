@@ -166,7 +166,7 @@ export default async function handler(req, res) {
       
       if (Array.isArray(gateData) && gateData.length > 0) {
         formattedData.Gate = gateData.map(item => ({
-          exchange: 'Gate',
+          exchange: 'Gate.io',
           time: new Date(item.t * 1000).toISOString(),
           rate: (parseFloat(item.r) * 100).toFixed(4),
           interval: 8
