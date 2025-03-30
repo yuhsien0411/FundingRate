@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       Bybit: [],
       Bitget: [],
       OKX: [],
-      Gate: [],  // 添加 Gate.io
+      'Gate.io': [],  // 修改這裡，從 'Gate' 改為 'Gate.io'
       HyperLiquid: []
     };
 
@@ -165,7 +165,7 @@ export default async function handler(req, res) {
       const gateData = await gateRes.json();
       
       if (Array.isArray(gateData) && gateData.length > 0) {
-        formattedData.Gate = gateData.map(item => ({
+        formattedData['Gate.io'] = gateData.map(item => ({
           exchange: 'Gate.io',
           time: new Date(item.t * 1000).toISOString(),
           rate: (parseFloat(item.r) * 100).toFixed(4),
@@ -173,7 +173,7 @@ export default async function handler(req, res) {
         }));
         
         console.log('Gate.io 歷史數據獲取成功:', {
-          數據點: formattedData.Gate.length,
+          數據點: formattedData['Gate.io'].length,
           時間範圍: {
             開始: new Date(gateData[gateData.length - 1].t * 1000).toLocaleString(),
             結束: new Date(gateData[0].t * 1000).toLocaleString()
@@ -241,11 +241,11 @@ export default async function handler(req, res) {
                 endTime: Math.floor(batchEndTime)
               };
               
-              console.log('HyperLiquid API 批次請求:', {
-                批次開始: new Date(currentStartTime).toLocaleString(),
-                批次結束: new Date(batchEndTime).toLocaleString(),
-                時間範圍_天: Math.floor((batchEndTime - currentStartTime) / (24 * 60 * 60 * 1000))
-              });
+              // console.log('HyperLiquid API 批次請求:', {
+              //   批次開始: new Date(currentStartTime).toLocaleString(),
+              //   批次結束: new Date(batchEndTime).toLocaleString(),
+              //   時間範圍_天: Math.floor((batchEndTime - currentStartTime) / (24 * 60 * 60 * 1000))
+              // });
 
               const hyperRes = await fetch('https://api.hyperliquid.xyz/info', {
                 method: 'POST',

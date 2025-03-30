@@ -177,12 +177,12 @@ const getChartOptions = (data, isDarkMode) => {
 
 // 定義交易所顏色和順序
 const exchangeColors = {
-  Binance: '#F3BA2F',  // 黃色
-  Bybit: '#4183FC',    // 藍色
-  Bitget: '#00b067',   // 綠色
-  OKX: '#2FB8E7',      // OKX 品牌藍色
-  'Gate.io': '#1C1C1C', // Gate.io 品牌黑色
-  HyperLiquid: '#FF0000'  // 紅色
+  Binance: '#FF0000',  // 紅色
+  Bybit: '#F3BA2F',    // 黃色
+  Bitget: '#00CED1',   // 湖水綠
+  OKX: '#000000',      // 預設黑色
+  'Gate.io': '#4183FC', // 藍色
+  HyperLiquid: '#006400'  // 深綠色
 };
 
 // 定義交易所順序
@@ -452,6 +452,21 @@ export default function HistoryPage() {
           console.error('HyperLiquid current rate error:', error);
         }
 
+        // Gate.io
+        try {
+          const gateRes = await fetch(
+            `/api/gateio/current-rate?symbol=${symbol}`
+          );
+          const gateData = await gateRes.json();
+          if (gateData.success && gateData.rate) {
+            currentData.rates['Gate.io'].rate = gateData.rate;
+          } else {
+            console.debug('Gate.io API response:', gateData);
+          }
+        } catch (error) {
+          console.error('Gate.io current rate error:', error);
+        }
+
         // 在設置 currentRates 之前進行數據驗證
         Object.keys(currentData.rates).forEach(exchange => {
           const rate = currentData.rates[exchange].rate;
@@ -532,8 +547,8 @@ export default function HistoryPage() {
           const value = timeGroups[time][exchange];
           return value !== undefined ? value : null;
         }),
-        borderColor: exchangeColors[exchange],
-        backgroundColor: exchangeColors[exchange],
+        borderColor: exchange === 'OKX' ? (isDarkMode ? '#FFFFFF' : '#000000') : exchangeColors[exchange],
+        backgroundColor: exchange === 'OKX' ? (isDarkMode ? '#FFFFFF' : '#000000') : exchangeColors[exchange],
         tension: 0.4,
         pointRadius: 2,
         pointHoverRadius: 4,
@@ -661,7 +676,7 @@ export default function HistoryPage() {
                   <tr>
                     <th>時間</th>
                     {exchangeOrder.map(exchange => (
-                      <th key={exchange} style={{ color: exchangeColors[exchange] }}>
+                      <th key={exchange} style={{ color: exchange === 'OKX' ? (isDarkMode ? '#FFFFFF' : '#000000') : exchangeColors[exchange] }}>
                         {exchange}
                       </th>
                     ))}
