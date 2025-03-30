@@ -59,6 +59,33 @@ async function fetchAllExchangeData() {
   try {
     console.log('開始獲取交易所數據...');
     
+    // 添加重試函數
+    async function fetchWithRetry(url, options = {}, retries = 3) {
+      for (let i = 0; i < retries; i++) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 秒超時
+          
+          const response = await fetch(url, {
+            ...options,
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          return response;
+        } catch (error) {
+          console.error(`嘗試 ${i + 1}/${retries} 失敗:`, url, error.message);
+          if (i === retries - 1) throw error;
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1))); // 指數退避
+        }
+      }
+    }
+    
     const apiCalls = [
       { name: 'Binance Rates', url: 'https://fapi.binance.com/fapi/v1/premiumIndex' },
       { name: 'Binance Funding Info', url: 'https://fapi.binance.com/fapi/v1/fundingInfo' },
@@ -110,10 +137,7 @@ async function fetchAllExchangeData() {
     const responses = await Promise.all(
       apiCalls.map(async ({ name, url, options = {} }) => {
         try {
-          const response = await fetch(url, options);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+          const response = await fetchWithRetry(url, options);
           const text = await response.text();
           try {
             return JSON.parse(text);
