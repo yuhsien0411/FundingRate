@@ -87,6 +87,16 @@ async function fetchAllExchangeData() {
       { name: 'OKX Tickers', url: 'https://www.okx.com/api/v5/public/mark-price?instType=SWAP' },
       { name: 'OKX Instruments', url: 'https://www.okx.com/api/v5/public/instruments?instType=SWAP' },
       { 
+        name: 'Gate.io Contracts', 
+        url: 'https://api.gateio.ws/api/v4/futures/usdt/contracts',
+        options: {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          }
+        }
+      },
+      { 
         name: 'Hyperliquid', 
         url: 'https://api.hyperliquid.xyz/info',
         options: {
@@ -128,6 +138,7 @@ async function fetchAllExchangeData() {
       bitgetContractsData,
       okxTickersData,
       okxInstrumentsData,
+      gateioContractsData,
       hyperliquidData
     ] = responses;
 
@@ -310,15 +321,40 @@ async function fetchAllExchangeData() {
       })
       .filter(item => item !== null);
 
-    // 添加更詳細的調試日誌
-    // console.log('OKX Debug:', {
-    //   contractsCount: okxUsdtContracts.length,
-    //   ratesCount: okxFundingRatesData.length,
-    //   processedCount: okxRates.length,
-    //   sampleContract: okxUsdtContracts[0],
-    //   sampleRate: okxFundingRatesData[0]?.data?.[0],
-    //   sampleInterval: okxRates[0]?.settlementInterval
-    // });
+    // 處理 Gate.io 數據
+    let gateioRates = [];
+    if (gateioContractsData) {
+      try {
+        gateioRates = gateioContractsData
+          .filter(item => item.name && item.name.endsWith('_USDT'))
+          .map(item => {
+            try {
+              const symbol = item.name.replace('_USDT', '');
+              const fundingRate = parseFloat(item.funding_rate);
+              const interval = parseInt(item.funding_interval) / 3600; // 轉換為小時
+
+              if (!item.name || !fundingRate || isNaN(fundingRate)) {
+                return null;
+              }
+
+              return {
+                symbol,
+                exchange: 'Gate.io',
+                currentRate: (fundingRate * 100).toFixed(4),
+                isSpecialInterval: interval !== 8,
+                settlementInterval: interval,
+                nextFundingTime: new Date(item.funding_next_apply * 1000).toISOString()
+              };
+            } catch (error) {
+              console.error('Gate.io 數據處理錯誤:', error, item);
+              return null;
+            }
+          })
+          .filter(item => item !== null);
+      } catch (error) {
+        console.error('Gate.io 數據處理錯誤:', error);
+      }
+    }
 
     // 合併所有交易所的數據
     const allRates = [
@@ -326,6 +362,7 @@ async function fetchAllExchangeData() {
       ...bybitRates,
       ...bitgetRates,
       ...okxRates,
+      ...gateioRates,
       ...hyperliquidRates
     ].filter(item => {
       // 確保 item 和 currentRate 存在且為有效數值
@@ -340,6 +377,7 @@ async function fetchAllExchangeData() {
       bybit: bybitRates?.length || 0,
       bitget: bitgetRates?.length || 0,
       okx: okxRates?.length || 0,
+      gateio: gateioRates?.length || 0,
       hyperliquid: hyperliquidRates?.length || 0
     });
 
@@ -347,10 +385,11 @@ async function fetchAllExchangeData() {
       success: true,
       data: allRates,
       debug: {
-        bitgetCount: bitgetRates?.length || 0,
         binanceCount: binanceRates?.length || 0,
         bybitCount: bybitRates?.length || 0,
+        bitgetCount: bitgetRates?.length || 0,
         okxCount: okxRates?.length || 0,
+        gateioCount: gateioRates?.length || 0,
         hyperliquidCount: hyperliquidRates?.length || 0,
         totalCount: allRates.length
       }

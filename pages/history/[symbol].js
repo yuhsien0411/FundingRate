@@ -181,11 +181,12 @@ const exchangeColors = {
   Bybit: '#4183FC',    // 藍色
   Bitget: '#00b067',   // 綠色
   OKX: '#2FB8E7',      // OKX 品牌藍色
+  'Gate.io': '#1C1C1C', // Gate.io 品牌黑色
   HyperLiquid: '#FF0000'  // 紅色
 };
 
 // 定義交易所順序
-const exchangeOrder = ['Binance', 'Bybit', 'Bitget', 'OKX', 'HyperLiquid'];
+const exchangeOrder = ['Binance', 'Bybit', 'Bitget', 'OKX', 'Gate.io', 'HyperLiquid'];
 
 // 修改計算累計費率函數
 const calculateCumulativeRates = (data, timeRange) => {
@@ -608,6 +609,7 @@ export default function HistoryPage() {
               <option value="Bybit">Bybit</option>
               <option value="Bitget">Bitget</option>
               <option value="OKX">OKX</option>
+              <option value="Gate.io">Gate.io</option>
             </select>
 
             <div className="time-range">

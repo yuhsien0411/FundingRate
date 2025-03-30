@@ -15,13 +15,14 @@ export default function Home() {
   const [isUpdating, setIsUpdating] = useState(false); // 添加更新狀態
   const [showInterval, setShowInterval] = useState(false); // 添加顯示模式狀態
   const [showNormalized, setShowNormalized] = useState(false); // 添加標準化顯示狀態
-  const [selectedExchanges, setSelectedExchanges] = useState(new Set(['Binance', 'Bybit', 'OKX', 'Bitget', 'HyperLiquid']));
+  const [selectedExchanges, setSelectedExchanges] = useState(new Set(['Binance', 'Bybit', 'OKX', 'Bitget', 'Gate.io', 'HyperLiquid']));
   const allExchanges = [
     { id: 'Binance', order: 1 },
     { id: 'Bybit', order: 2 },
     { id: 'Bitget', order: 3 },
     { id: 'OKX', order: 4 },
-    { id: 'HyperLiquid', order: 5 }
+    { id: 'Gate.io', order: 5 },
+    { id: 'HyperLiquid', order: 6 }
   ];
   const [searchTerm, setSearchTerm] = useState('');  // 新增搜尋狀態
 

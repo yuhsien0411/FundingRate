@@ -1,0 +1,106 @@
+/* 全局樣式 */
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: #dddddd;
+  --positive-rate: #4caf50;
+  --negative-rate: #f44336;
+}
+
+html.dark-mode {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --border-color: #404040;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* 表格樣式 */
+.rates-table {
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.data-table {
+  overflow-x: auto;
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  -webkit-overflow-scrolling: touch;
+}
+
+.data-table:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 30px;
+  background: linear-gradient(to right, transparent, var(--bg-secondary));
+  pointer-events: none;
+  opacity: 0.8;
+  z-index: 20;
+}
+
+.swipe-indicator {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 50%;
+  font-size: 18px;
+  animation: swipe-animation 2s infinite;
+  z-index: 30;
+  display: none;
+}
+
+@keyframes swipe-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(-10px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(10px);
+  }
+}
+
+/* 響應式樣式 */
+@media (max-width: 768px) {
+  .data-table {
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 10px;
+  }
+  
+  .swipe-indicator {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .data-table {
+    margin-left: -8px;
+    margin-right: -8px;
+    width: calc(100% + 16px);
+    border-radius: 0;
+  }
+} 

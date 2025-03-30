@@ -32,6 +32,7 @@ export default async function handler(req, res) {
       Bybit: [],
       Bitget: [],
       OKX: [],
+      Gate: [],  // 添加 Gate.io
       HyperLiquid: []
     };
 
@@ -154,6 +155,35 @@ export default async function handler(req, res) {
       }
     } catch (error) {
       console.error('OKX API Error:', error);
+    }
+
+    try {
+      // 獲取 Gate.io 歷史數據
+      const gateRes = await fetch(
+        `https://api.gateio.ws/api/v4/futures/usdt/funding_rate?contract=${symbol}_USDT&limit=100`
+      );
+      const gateData = await gateRes.json();
+      
+      if (Array.isArray(gateData) && gateData.length > 0) {
+        formattedData.Gate = gateData.map(item => ({
+          exchange: 'Gate',
+          time: new Date(item.t * 1000).toISOString(),
+          rate: (parseFloat(item.r) * 100).toFixed(4),
+          interval: 8
+        }));
+        
+        console.log('Gate.io 歷史數據獲取成功:', {
+          數據點: formattedData.Gate.length,
+          時間範圍: {
+            開始: new Date(gateData[gateData.length - 1].t * 1000).toLocaleString(),
+            結束: new Date(gateData[0].t * 1000).toLocaleString()
+          }
+        });
+      } else {
+        console.log(`Gate.io: 無可用資金費率數據或API返回格式不正確 (${symbol})`);
+      }
+    } catch (error) {
+      console.error('Gate.io API Error:', error);
     }
 
     try {
