@@ -24,8 +24,21 @@
     "sqlite3": "^5.1.7"
   },
   "main": "next.config.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "keywords": [
+    "crypto",
+    "funding-rate",
+    "trading",
+    "binance",
+    "bybit",
+    "okx",
+    "bitget",
+    "gate.io",
+    "hyperliquid",
+    "nextjs",
+    "react",
+    "chart.js"
+  ],
+  "author": "Xian",
+  "license": "MIT",
+  "description": "加密貨幣永續合約資金費率監控系統，支援多個主要交易所的即時和歷史資金費率數據"
 }
