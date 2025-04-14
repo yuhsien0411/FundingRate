@@ -45,6 +45,14 @@ const nextConfig = {
       }
     ];
   },
+  // 設置伺服器監聽端口
+  serverRuntimeConfig: {
+    port: parseInt(process.env.PORT, 10) || 8080
+  },
+  // 允許外部訪問
+  experimental: {
+    allowExternalDir: true
+  }
 }
 
 module.exports = nextConfig

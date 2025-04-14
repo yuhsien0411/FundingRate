@@ -201,7 +201,7 @@ async function fetchAllExchangeData() {
             return {
               symbol: item.symbol.replace('USDT', ''),
               exchange: 'Binance',
-              currentRate: (parseFloat(item.lastFundingRate) * 100).toFixed(4),
+              currentRate: (parseFloat(item.lastFundingRate) * 100).toFixed(3),
               isSpecialInterval: interval !== 8,
               settlementInterval: interval
             };
@@ -223,7 +223,7 @@ async function fetchAllExchangeData() {
         const [metadata, assetContexts] = hyperliquidData;
         hyperliquidRates = metadata.universe.map((asset, index) => {
           const assetData = assetContexts[index];
-          const rate = (parseFloat(assetData.funding) * 100).toFixed(4);
+          const rate = (parseFloat(assetData.funding) * 100).toFixed(3);
           return {
             symbol: asset.name,
             exchange: 'HyperLiquid',
@@ -247,7 +247,7 @@ async function fetchAllExchangeData() {
               return {
                 symbol: item.symbol.replace('USDT', ''),
                 exchange: 'Bybit',
-                currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4),
+                currentRate: (parseFloat(item.fundingRate) * 100).toFixed(3),
                 isSpecialInterval: interval !== 8,
                 settlementInterval: interval
               };
@@ -270,7 +270,7 @@ async function fetchAllExchangeData() {
               return {
                 symbol,
                 exchange: 'Bitget',
-                currentRate: (parseFloat(item.fundingRate) * 100).toFixed(4),
+                currentRate: (parseFloat(item.fundingRate) * 100).toFixed(3),
                 isSpecialInterval: interval !== 8,
                 settlementInterval: interval
               };
@@ -332,7 +332,7 @@ async function fetchAllExchangeData() {
           return {
             symbol,
             exchange: 'OKX',
-            currentRate: (fundingRate * 100).toFixed(4),
+            currentRate: (fundingRate * 100).toFixed(3),
             isSpecialInterval: interval !== 8,  // 如果不是8小時就標記
             settlementInterval: interval,  // 實際結算間隔
             nextFundingTime: new Date(nextFundingTime).toISOString(),
@@ -364,7 +364,7 @@ async function fetchAllExchangeData() {
               return {
                 symbol,
                 exchange: 'Gate.io',
-                currentRate: (fundingRate * 100).toFixed(4),
+                currentRate: (fundingRate * 100).toFixed(3),
                 isSpecialInterval: interval !== 8,
                 settlementInterval: interval,
                 nextFundingTime: new Date(item.funding_next_apply * 1000).toISOString()

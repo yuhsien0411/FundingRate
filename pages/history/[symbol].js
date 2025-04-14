@@ -218,7 +218,7 @@ const calculateCumulativeRates = (data, timeRange) => {
       .map(item => parseFloat(item.rate));
 
     cumulativeRates[exchange] = filteredData.length > 0
-      ? filteredData.reduce((sum, rate) => sum + rate, 0).toFixed(4)
+      ? filteredData.reduce((sum, rate) => sum + rate, 0).toFixed(3)
       : null;
   });
 
@@ -272,12 +272,31 @@ export default function HistoryPage() {
         break;
     }
 
+    // 過濾歷史數據
     const filteredData = historyData.data.filter(item => 
       new Date(item.time) > filterTime
     );
-
-    setChartData(filteredData);
-  }, [timeRange, historyData]);
+    
+    // 如果有當前費率，將其添加到圖表數據中
+    let chartDataWithCurrent = [...filteredData];
+    
+    if (currentRates) {
+      // 將當前費率添加到數據中
+      Object.entries(currentRates.rates).forEach(([exchange, data]) => {
+        if (data.rate && !isNaN(parseFloat(data.rate))) {
+          chartDataWithCurrent.push({
+            symbol: symbol,
+            exchange: exchange,
+            rate: data.rate,
+            time: currentRates.time,
+            isCurrent: true
+          });
+        }
+      });
+    }
+    
+    setChartData(chartDataWithCurrent);
+  }, [timeRange, historyData, currentRates, symbol]);
 
   useEffect(() => {
     if (!symbol) return;
@@ -332,7 +351,7 @@ export default function HistoryPage() {
               bitgetData.data[0].fundingRate) {
             const rate = parseFloat(bitgetData.data[0].fundingRate);
             if (!isNaN(rate)) {
-              currentData.rates.Bitget.rate = (rate * 100).toFixed(4);
+              currentData.rates.Bitget.rate = (rate * 100).toFixed(3);
             } else {
               console.debug('Bitget invalid rate value:', bitgetData.data[0].fundingRate);
             }
@@ -355,7 +374,7 @@ export default function HistoryPage() {
           const binanceData = await binanceRes.json();
           if (binanceData.lastFundingRate) {
             currentData.rates.Binance.rate = 
-              (parseFloat(binanceData.lastFundingRate) * 100).toFixed(4);
+              (parseFloat(binanceData.lastFundingRate) * 100).toFixed(3);
           }
         } catch (error) {
           console.error('Binance current rate error:', error);
@@ -372,7 +391,7 @@ export default function HistoryPage() {
             // 確保資金費率存在且為有效數字
             if (data.fundingRate && !isNaN(parseFloat(data.fundingRate))) {
               currentData.rates.Bybit.rate = 
-                (parseFloat(data.fundingRate) * 100).toFixed(4);
+                (parseFloat(data.fundingRate) * 100).toFixed(3);
             }
           }
         } catch (error) {
@@ -389,7 +408,7 @@ export default function HistoryPage() {
             const fundingRate = okxData.data[0].fundingRate;
             if (fundingRate && !isNaN(parseFloat(fundingRate))) {
               currentData.rates.OKX.rate = 
-                (parseFloat(fundingRate) * 100).toFixed(4);
+                (parseFloat(fundingRate) * 100).toFixed(3);
             }
           }
         } catch (error) {
@@ -565,16 +584,21 @@ export default function HistoryPage() {
     if (!rates?.hourlyRates) return;
     
     const rect = event.currentTarget.getBoundingClientRect();
-    const content = rates.hourlyRates
-      .filter(hr => hr.isHourly)  // 只顯示小時數據
-      .map(hr => `${hr.time}: ${hr.rate}%`)
-      .join('\n');
-
-    setTooltipContent(content);
-    setTooltipPosition({
-      x: rect.left + (rect.width / 2),
-      y: rect.top - 10
-    });
+    let content = '';
+    
+    if (Array.isArray(rates.hourlyRates)) {
+      content = rates.hourlyRates
+        .map(hr => `${hr.time}: ${hr.rate}%`)
+        .join('\n');
+    }
+    
+    if (content) {
+      setTooltipContent(content);
+      setTooltipPosition({
+        x: rect.left + (rect.width / 2),
+        y: rect.top - 10
+      });
+    }
   };
 
   // 處理滑鼠離開事件
@@ -693,14 +717,16 @@ export default function HistoryPage() {
                         <td 
                           key={exchange}
                           className={`${
-                            rate 
+                            rate && !isNaN(parseFloat(rate))
                               ? parseFloat(rate) > 0 
                                 ? 'positive-rate' 
                                 : 'negative-rate'
                               : ''
                           }`}
                         >
-                          {rate ? `${rate}%` : '-'}
+                          <span className={`funding-rate ${rate && !isNaN(parseFloat(rate)) ? (parseFloat(rate) >= 0 ? 'positive-rate' : 'negative-rate') : ''}`}>
+                            {rate && !isNaN(parseFloat(rate)) ? parseFloat(rate).toFixed(3) + '%' : '-'}
+                          </span>
                         </td>
                       );
                     })}
@@ -713,7 +739,7 @@ export default function HistoryPage() {
                         <td 
                           key={exchange}
                           className={`${
-                            currentRates.rates[exchange]?.rate 
+                            currentRates.rates[exchange]?.rate && !isNaN(parseFloat(currentRates.rates[exchange].rate))
                               ? parseFloat(currentRates.rates[exchange].rate) > 0 
                                 ? 'positive-rate' 
                                 : 'negative-rate'
@@ -723,9 +749,11 @@ export default function HistoryPage() {
                             handleMouseEnter(e, currentRates.rates[exchange])}
                           onMouseLeave={handleMouseLeave}
                         >
-                          {currentRates.rates[exchange]?.rate 
-                            ? `${currentRates.rates[exchange].rate}%` 
-                            : '-'}
+                          <span className={`funding-rate ${currentRates.rates[exchange]?.rate && !isNaN(parseFloat(currentRates.rates[exchange].rate)) ? (parseFloat(currentRates.rates[exchange].rate) >= 0 ? 'positive-rate' : 'negative-rate') : ''}`}>
+                            {currentRates.rates[exchange]?.rate && !isNaN(parseFloat(currentRates.rates[exchange].rate)) 
+                              ? parseFloat(currentRates.rates[exchange].rate).toFixed(3) + '%' 
+                              : '-'}
+                          </span>
                           {exchange === 'HyperLiquid' && 
                            currentRates.rates[exchange]?.hourlyRates && (
                             <span className="info-icon">ℹ</span>
@@ -753,11 +781,13 @@ export default function HistoryPage() {
                       {exchangeOrder.map(exchange => (
                         <td 
                           key={exchange}
-                          className={`${rates[exchange]?.rate && parseFloat(rates[exchange].rate) > 0 ? 'positive-rate' : 'negative-rate'}`}
+                          className={`${rates[exchange]?.rate && !isNaN(parseFloat(rates[exchange].rate)) ? (parseFloat(rates[exchange].rate) > 0 ? 'positive-rate' : 'negative-rate') : ''}`}
                           onMouseEnter={(e) => exchange === 'HyperLiquid' && rates[exchange]?.hourlyRates && handleMouseEnter(e, rates[exchange])}
                           onMouseLeave={handleMouseLeave}
                         >
-                          {rates[exchange]?.rate ? `${rates[exchange].rate}%` : '-'}
+                          <span className={`funding-rate ${rates[exchange]?.rate && !isNaN(parseFloat(rates[exchange].rate)) ? (parseFloat(rates[exchange].rate) >= 0 ? 'positive-rate' : 'negative-rate') : ''}`}>
+                            {rates[exchange]?.rate && !isNaN(parseFloat(rates[exchange].rate)) ? parseFloat(rates[exchange].rate).toFixed(3) + '%' : '-'}
+                          </span>
                           {exchange === 'HyperLiquid' && rates[exchange]?.hourlyRates && (
                             <span className="info-icon">ℹ</span>
                           )}

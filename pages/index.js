@@ -237,6 +237,34 @@ export default function Home() {
     });
   };
 
+  // 添加下拉菜單顯示狀態
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  
+  // 切換下拉菜單顯示狀態
+  const toggleExchangeDropdown = (e) => {
+    e.preventDefault();
+    setDropdownOpen(!dropdownOpen);
+  };
+  
+  // 點擊菜單外部時關閉下拉菜單
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownOpen && !event.target.closest('.exchange-selector') && 
+          !event.target.closest('.exchange-options') && 
+          !event.target.classList.contains('exchange-options-backdrop')) {
+        setDropdownOpen(false);
+      }
+    };
+
+    if (typeof window !== 'undefined' && window.innerWidth > 768) {
+      document.addEventListener('click', handleClickOutside);
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }
+    return () => {};
+  }, [dropdownOpen]);
+
   // 等待客戶端渲染
   if (!mounted) return null;
 
@@ -262,22 +290,34 @@ export default function Home() {
                 placeholder="搜尋幣種或費率..."
                 className="search-input"
               />
+              <button 
+                className={`clear-search ${!searchTerm ? 'disabled' : ''}`}
+                onClick={() => setSearchTerm('')}
+                disabled={!searchTerm}
+                title="清除搜尋"
+              >
+                ×
+              </button>
             </div>
             <div className="controls">
-              <div className="exchange-dropdown">
-                <button className="dropdown-button">
-                  {isMobile ? "交易所" : `交易所選擇 (${selectedExchanges.size})`}
-                </button>
-                <div className="dropdown-content">
+              <div className="exchange-selector">
+                <div className="exchange-header" onClick={toggleExchangeDropdown}>
+                  <span>{isMobile ? "交易所" : `交易所選擇 (${selectedExchanges.size})`}</span>
+                  <span className="dropdown-arrow">{dropdownOpen ? '▲' : '▼'}</span>
+                </div>
+                {dropdownOpen && (
+                  <div className="exchange-options-backdrop" onClick={() => setDropdownOpen(false)}></div>
+                )}
+                <div className={`exchange-options ${dropdownOpen ? 'visible' : ''}`}>
                   {allExchanges.map(exchange => (
-                    <label key={exchange.id} className="exchange-option">
+                    <label key={exchange.id} className={`exchange-option ${selectedExchanges.has(exchange.id) ? 'selected' : ''}`}>
                       <input
                         type="checkbox"
                         checked={selectedExchanges.has(exchange.id)}
                         onChange={() => handleExchangeToggle(exchange.id)}
                         disabled={selectedExchanges.size === 1 && selectedExchanges.has(exchange.id)}
                       />
-                      {exchange.id}
+                      <span className="exchange-name">{exchange.id}</span>
                     </label>
                   ))}
                 </div>
@@ -369,12 +409,13 @@ export default function Home() {
                             >
                               {data ? (
                                 <>
-                                  {showNormalized && data.settlementInterval && data.settlementInterval !== 8 ? (
-                                    // 標準化為8小時費率
-                                    `${(parseFloat(data.currentRate) * (8 / data.settlementInterval)).toFixed(4)}%`
-                                  ) : (
-                                    `${parseFloat(data.currentRate)}%`
-                                  )}
+                                  <div className="annualized-rate">
+                                    <span className={parseFloat(data.currentRate) >= 0 ? "positive-rate" : "negative-rate"}>
+                                      {showNormalized
+                                        ? `${(parseFloat(data.currentRate) * (8 / data.settlementInterval)).toFixed(4)}%`
+                                        : `${parseFloat(data.currentRate).toFixed(4)}%`}
+                                    </span>
+                                  </div>
                                   {data.isSpecialInterval && (
                                     <span 
                                       style={{ color: '#ffd700' }} 
@@ -451,6 +492,7 @@ export default function Home() {
           width: 100%;
           max-width: 600px;
           margin: 0 auto;
+          position: relative;
         }
 
         .search-input {
@@ -463,6 +505,7 @@ export default function Home() {
           font-size: 16px;
           outline: none;
           transition: all 0.3s ease;
+          padding-right: 35px; /* 為清除按鈕留出空間 */
         }
 
         .search-input:focus {
@@ -475,6 +518,39 @@ export default function Home() {
           opacity: 0.6;
         }
 
+        .clear-search {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: ${isDarkMode ? '#444' : '#ddd'};
+          border: none;
+          color: var(--text-color);
+          font-size: 20px;
+          font-weight: bold;
+          cursor: pointer;
+          padding: 0;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 26px;
+          height: 26px;
+          transition: all 0.2s ease;
+          opacity: 0.9;
+        }
+
+        .clear-search:hover:not(.disabled) {
+          opacity: 1;
+          background: ${isDarkMode ? '#666' : '#ccc'};
+        }
+
+        .clear-search.disabled {
+          opacity: 0.3;
+          cursor: default;
+          background: ${isDarkMode ? '#333' : '#eee'};
+        }
+
         .controls {
           display: flex;
           gap: 10px;
@@ -483,35 +559,64 @@ export default function Home() {
           flex-wrap: wrap;
         }
 
-        .exchange-dropdown {
+        .exchange-selector {
           position: relative;
-          display: inline-block;
+          min-width: 120px;
+          z-index: 1001;
         }
 
-        .dropdown-button {
+        .exchange-options-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 999;
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .exchange-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
           padding: 5px 10px;
           border: 1px solid var(--table-border);
           border-radius: 4px;
           background: var(--bg-color);
           color: var(--text-color);
           cursor: pointer;
-          min-width: 120px;
+          transition: all 0.3s ease;
+          position: relative;
+          z-index: 1002;
         }
 
-        .dropdown-content {
+        .exchange-header:hover {
+          background-color: var(--hover-bg);
+        }
+
+        .dropdown-arrow {
+          margin-left: 8px;
+          font-size: 10px;
+        }
+
+        .exchange-options {
           display: none;
           position: absolute;
-          right: 0;
+          top: 100%;
+          left: 0;
+          right: auto;
           background-color: var(--bg-color);
-          min-width: 160px;
-          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-          padding: 8px;
-          border-radius: 4px;
           border: 1px solid var(--table-border);
-          z-index: 1;
+          border-radius: 4px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          margin-top: 4px;
+          z-index: 1000;
+          max-height: 250px;
+          overflow-y: auto;
+          padding: 4px;
         }
 
-        .exchange-dropdown:hover .dropdown-content {
+        .exchange-options.visible {
           display: block;
         }
 
@@ -519,13 +624,19 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 8px;
-          padding: 4px 8px;
+          padding: 8px 10px;
           cursor: pointer;
           white-space: nowrap;
+          border-radius: 4px;
+          transition: all 0.2s ease;
         }
 
         .exchange-option:hover {
           background-color: var(--hover-bg);
+        }
+
+        .exchange-option.selected {
+          background-color: rgba(0, 123, 255, 0.1);
         }
 
         .exchange-option input {
@@ -535,6 +646,10 @@ export default function Home() {
         .exchange-option input:disabled {
           cursor: not-allowed;
           opacity: 0.5;
+        }
+
+        .exchange-name {
+          flex: 1;
         }
 
         .display-toggle {
@@ -566,6 +681,11 @@ export default function Home() {
         :global(.dark-mode) .display-toggle.active {
           background: var(--text-color);
           color: var(--bg-color);
+        }
+
+        /* 深色模式下下拉選單的陰影適配 */
+        :global(.dark-mode) .exchange-options {
+          box-shadow: 0 4px 12px rgba(255,255,255,0.1);
         }
 
         .theme-toggle {
@@ -686,65 +806,6 @@ export default function Home() {
           white-space: nowrap;
         }
 
-        .exchange-dropdown {
-          position: relative;
-          display: inline-block;
-        }
-
-        .dropdown-button {
-          padding: 5px 10px;
-          border: 1px solid var(--table-border);
-          border-radius: 4px;
-          background: var(--bg-color);
-          color: var(--text-color);
-          cursor: pointer;
-          min-width: 120px;
-        }
-
-        .dropdown-content {
-          display: none;
-          position: absolute;
-          right: 0;
-          background-color: var(--bg-color);
-          min-width: 160px;
-          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-          padding: 8px;
-          border-radius: 4px;
-          border: 1px solid var(--table-border);
-          z-index: 1;
-        }
-
-        .exchange-dropdown:hover .dropdown-content {
-          display: block;
-        }
-
-        .exchange-option {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 4px 8px;
-          cursor: pointer;
-          white-space: nowrap;
-        }
-
-        .exchange-option:hover {
-          background-color: var(--hover-bg);
-        }
-
-        .exchange-option input {
-          cursor: pointer;
-        }
-
-        .exchange-option input:disabled {
-          cursor: not-allowed;
-          opacity: 0.5;
-        }
-
-        /* 深色模式適配 */
-        :global(.dark-mode) .dropdown-content {
-          box-shadow: 0 8px 16px rgba(255,255,255,0.1);
-        }
-
         .symbol-link {
           color: var(--text-color);
           text-decoration: none;
@@ -757,7 +818,7 @@ export default function Home() {
           text-decoration: underline;
         }
 
-        /* 改進移動端響應式佈局 */
+        /* 確保下拉選單在移動設備上正確顯示 */
         @media (max-width: 768px) {
           .header-container {
             padding: 0;
@@ -788,13 +849,21 @@ export default function Home() {
             justify-content: space-between;
             gap: 5px;
           }
-
+          
+          /* 設置合適的觸摸目標尺寸 */
+          .exchange-header, .display-toggle, .theme-toggle {
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
           .dropdown-button, .display-toggle {
             padding: 6px 8px;
             font-size: 13px;
             min-width: unset;
           }
-
+          
           .theme-toggle {
             padding: 4px;
           }
@@ -820,6 +889,33 @@ export default function Home() {
           th:first-child {
             z-index: 11;
           }
+          
+          /* 移動端選單樣式優化 */
+          .exchange-options {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: 80%;
+            max-width: 300px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          }
+          
+          .exchange-option {
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            border-bottom: 1px solid var(--table-border);
+          }
+          
+          .exchange-option:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+          }
         }
 
         /* 小螢幕手機適配 */
@@ -841,7 +937,7 @@ export default function Home() {
             padding: 6px 8px;
           }
 
-          .dropdown-button, .display-toggle {
+          .exchange-header, .display-toggle {
             padding: 5px 6px;
             font-size: 12px;
           }
@@ -853,6 +949,12 @@ export default function Home() {
           th, td {
             padding: 6px 3px;
             min-width: 60px;
+          }
+
+          /* 確保下拉選單在小螢幕上完全顯示 */
+          .exchange-options {
+            width: 150px;
+            max-height: 70vh;
           }
         }
       `}</style>
