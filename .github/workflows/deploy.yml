@@ -19,7 +19,7 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Deploy to Cloudflare Workers
-        run: npx wrangler deploy worker.js
+      - name: Deploy to Cloudflare Workers (直接部署)
+        run: node deploy.js
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }} 
