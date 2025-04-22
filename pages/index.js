@@ -290,14 +290,6 @@ export default function Home() {
                 placeholder="搜尋幣種或費率..."
                 className="search-input"
               />
-              <button 
-                className={`clear-search ${!searchTerm ? 'disabled' : ''}`}
-                onClick={() => setSearchTerm('')}
-                disabled={!searchTerm}
-                title="清除搜尋"
-              >
-                ×
-              </button>
             </div>
             <div className="controls">
               <div className="exchange-selector">
@@ -492,7 +484,6 @@ export default function Home() {
           width: 100%;
           max-width: 600px;
           margin: 0 auto;
-          position: relative;
         }
 
         .search-input {
@@ -505,7 +496,6 @@ export default function Home() {
           font-size: 16px;
           outline: none;
           transition: all 0.3s ease;
-          padding-right: 35px; /* 為清除按鈕留出空間 */
         }
 
         .search-input:focus {
@@ -516,39 +506,6 @@ export default function Home() {
         .search-input::placeholder {
           color: var(--text-color);
           opacity: 0.6;
-        }
-
-        .clear-search {
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-          background: ${isDarkMode ? '#444' : '#ddd'};
-          border: none;
-          color: var(--text-color);
-          font-size: 20px;
-          font-weight: bold;
-          cursor: pointer;
-          padding: 0;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 26px;
-          height: 26px;
-          transition: all 0.2s ease;
-          opacity: 0.9;
-        }
-
-        .clear-search:hover:not(.disabled) {
-          opacity: 1;
-          background: ${isDarkMode ? '#666' : '#ccc'};
-        }
-
-        .clear-search.disabled {
-          opacity: 0.3;
-          cursor: default;
-          background: ${isDarkMode ? '#333' : '#eee'};
         }
 
         .controls {
