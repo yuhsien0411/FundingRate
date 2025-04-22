@@ -1,5 +1,5 @@
 name = "fundingrate-web"
-main = "pages/index.js"
+main = "worker.js"
 compatibility_date = "2025-04-22"
 
 [build]
