@@ -1,6 +1,3 @@
-// 引入 Next.js 頁面
-import Home from './pages/index.js';
-
 // 創建事件處理程序
 export default {
   async fetch(request, env, ctx) {

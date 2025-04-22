@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p ${PORT:-3000}"
+    "start": "next start -p ${PORT:-3000}",
+    "deploy": "npx wrangler deploy worker.js"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
