@@ -1,8 +1,14 @@
-// 創建事件處理程序
-export default {
-  async fetch(request, env, ctx) {
-    // 返回一個簡單的 HTML 回應
-    return new Response(`<!DOCTYPE html>
+// 基本的 Worker 處理程序
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+/**
+ * 處理請求並回應 HTML
+ * @param {Request} request
+ */
+async function handleRequest(request) {
+  return new Response(`<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -29,9 +35,8 @@ export default {
   </script>
 </body>
 </html>`, {
-      headers: {
-        'content-type': 'text/html;charset=UTF-8',
-      },
-    });
-  },
-}; 
+    headers: {
+      'content-type': 'text/html;charset=UTF-8',
+    },
+  });
+} 
