@@ -1,0 +1,6 @@
+name = "fundingrate-web"
+main = "pages/index.js"
+compatibility_date = "2025-04-22"
+
+[build]
+command = "npm run build" 
